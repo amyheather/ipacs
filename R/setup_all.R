@@ -1,7 +1,29 @@
+#' Set up for simulation
+#'
+#' @param model_type A string (either "visit" or "bed")
+#'
+#' @return list(return_new_names, return_objects). Return_new_names is a list
+#' of strings, which are the names of objects in return_objects. Return_objects
+#' contains:
+#' * scenarioes - dataframe (need to add description for each of these)
+#' * costs
+#' * init_occ
+#' * init_niq
+#' * srv_dist
+#' * cap
+#' * loss
+#' * srv_params
+#' * mean_los
+#' * sd_los
+#' * arr_rates
+#' * pathway_vector
+#'
+#' @export
+#'
+#' @examples
+#' setup_visit <- setup_all("visit")
+#' setup_visit <- setup_all("bed")
 setup_all <- function(model_type){
-  # Set up for the simulation
-  # Input: model - either "visit" or "bed"
-
   # Set parameters depending on model type
   if (model_type == "visit") {
     pathway <- "P1"
