@@ -8,9 +8,6 @@
 #' @importFrom readxl read_excel
 #'
 #' @export
-#'
-#' @examples
-#'
 load_setup <- function(input_filename) {
   source(system.file(package = "ipacs", "scripts/setup.R"))
 }
