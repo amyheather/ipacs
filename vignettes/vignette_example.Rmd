@@ -42,3 +42,14 @@ your chosen method, as per est_method
 ``` {r mu_sigma}
 losA <- calculate_mu_sigma(est_method = 1, losA, sd_los = 3)
 ```
+
+Set simulation length to the number of unique dates in arrivals
+``` {r sim_length}
+sim_length <- as.integer(length(unique(arrivals_all$date)))
+```
+
+Create scenarios and arr_scenarios
+``` {r scenarios}
+scenarios <- create_scenarios("scenarios", arrivals_all, capacity, losA, init_conds)
+arr_scenarios <- create_scenarios("arr_scenarios", arrivals_all, capacity, losA, init_conds)
+```
