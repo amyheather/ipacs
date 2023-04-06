@@ -1,5 +1,5 @@
 ---
-title: "Example"
+title: "How to run the IPACS model"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{vignette_example}
@@ -18,7 +18,16 @@ knitr::opts_chunk$set(
 library(ipacs)
 ```
 
-Import sheets from file containing model parameters
+Use `import_file` to import sheets from file containing model parameters. This
+will produce 5 dataframes: "arrivals_all", "init_conds", "capacity", "losA" and
+"costs". As R cannot return multiple objects, we return a list of dataframes
+and a list of dataframe names, then use assign to create those in our current
+environment.
+
+In the example, `system.file()` is used to find example data stored in the IPACS
+package. However, you can input a string with the path to your desired file - 
+e.g. `import_file("myfile.xlsx").
+
 ```{r import}
 files <- import_file(
   system.file("extdata", "IPACS_20230214_fix.xlsx", package="ipacs"))
@@ -28,12 +37,8 @@ for (x in seq_along(files[[1]])){
 }
 ```
 
-This will produce five dataframes: 
-```{r, files}
-print(files[[1]])
-```
-
-Recalculate mu and sigma in losA dataframe using chosen method
+Use `calculate_mu_sigma` to recalculate mu and sigma in losA dataframe using
+your chosen method, as per est_method
 ``` {r mu_sigma}
 losA <- calculate_mu_sigma(est_method = 1, losA, sd_los = 3)
 ```
