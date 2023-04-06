@@ -95,9 +95,17 @@ the path to your desired file - e.g. `import_file(“myfile.xlsx”).</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">x</span><span class="op">]</span>, <span class="va">files</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Use <code>calculate_mu_sigma</code> to recalculate mu and sigma in
-losA dataframe using your chosen method, as per est_method</p>
+losA dataframe using your chosen method, as per est_method. Default is
+1. Default sd_los is 3.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">losA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_mu_sigma.html">calculate_mu_sigma</a></span><span class="op">(</span>est_method <span class="op">=</span> <span class="fl">1</span>, <span class="va">losA</span>, sd_los <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">losA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_mu_sigma.html">calculate_mu_sigma</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Set simulation length to the number of unique dates in arrivals</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">arrivals_all</span><span class="op">$</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Create scenarios and arr_scenarios</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_scenarios.html">create_scenarios</a></span><span class="op">(</span>scenarios<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">arr_scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_scenarios.html">create_scenarios</a></span><span class="op">(</span>scenarios<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
   </main>
 </div>
 
