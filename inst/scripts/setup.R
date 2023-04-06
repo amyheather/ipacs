@@ -2,6 +2,21 @@
 # Sim_length, scenarios and arr_scenarios are used for visit based and
 # bed based simulation, so set-up in a separate script
 
+# Name of file with model parameters (should be stored in model_inputs folder)
+input_filename <- "IPACS_20230214_fix.xlsx"
+
+# Set manual parameters
+sd_los <- 3 # estimate of standard deviation for length of stay distribution
+nruns <- as.integer(5) # number of runs for each simulation
+sd_isr <- 0.5 # initial service/visit rate
+sd_esr <- 0.5 # end service rate/final visit rate
+temp_seed <- 1
+warmup <- 0
+
+# Choose method for estimation of mu and sigma (either 1 or 2)
+# See set_up.R for the difference between the methods
+est_method <- 1
+
 # Create list of (1) dataframes to create, and (2) sheets to import from
 # Then import each sheet and save to the relevant dataframe
 input_list <- list(c("arrivals_all", "arrivals"),
@@ -10,8 +25,9 @@ input_list <- list(c("arrivals_all", "arrivals"),
                    c("losA", "los"),
                    c("costs", "costs"))
 for (x in input_list){
-  assign(x[1], readxl::read_excel(here("model_inputs", input_filename),
-                                  sheet = x[2]))
+  assign(x[1], readxl::read_excel(
+    system.file(package = "ipacs", paste0("model_inputs/", input_filename)),
+    sheet = x[2]))
 }
 
 # Create mu, sigma and los_params columns
