@@ -1,16 +1,19 @@
 #' Calculate mu and sigma
 #'
-#' Calculates mu and sigma, and stores both within los_params
+#' Calculates mu and sigma, and stores both within los_params, within the
+#' length of stay dataframe (losA).
 #'
-#' @param est_method integer (should be set to 1 or 2). Default 1.
-#' @param losA dataframe (with length of stay parameters, imported from excel)
-#' @param sd_los number (SD for length of stay). Default 3.
+#' @param est_method Integer. Indicates estimation method to use, either 1 or 2.
+#' @param losA Dataframe.
+#' @param sd_los Float. Standard deviation for length of stay distribution.
 #'
-#' @return losA
+#' @return losA with new mu, sigma and los_params columns.
 #'
 #' @export
-
-calculate_mu_sigma <- function(est_method = 1,
+#'
+#' @examplesIf interactive()
+#' losA <- calculate_mu_sigma(est_method = 1, losA = losA, sd_los = 3)
+calculate_mu_sigma <- function(est_method = parent.frame()$est_method,
                                losA = parent.frame()$losA,
                                sd_los = parent.frame()$sd_los){
   # Delete columns if they already exist

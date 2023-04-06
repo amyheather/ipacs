@@ -2,20 +2,25 @@
 % Please edit documentation in R/import_file.R
 \name{import_file}
 \alias{import_file}
-\title{Imports the sheets from the excel file with the model parameters
-File should contain sheets "arrivals", "initial conditions", "capacity",
-"los" and "costs"}
+\title{Import simulation excel file}
 \usage{
 import_file(filename)
 }
 \arguments{
-\item{filename}{string}
+\item{filename}{String.}
 }
 \value{
-list(df_names, df_list)
+List of length 2. Contains list of dataframe names and list of
+dataframes.
 }
 \description{
-Imports the sheets from the excel file with the model parameters
-File should contain sheets "arrivals", "initial conditions", "capacity",
-"los" and "costs"
+Imports each sheet from the excel file that contain parameters for the
+simulation. File should contain sheets "arrivals", "initial conditions",
+"capacity", "los" and "costs". Returns these as dataframes, along with
+list of dataframe names.
+}
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+import_file("ipacs_model_parameters.xlsx")
+\dontshow{\}) # examplesIf}
 }

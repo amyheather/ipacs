@@ -5,21 +5,27 @@
 \title{Calculate mu and sigma}
 \usage{
 calculate_mu_sigma(
-  est_method = 1,
+  est_method = parent.frame()$est_method,
   losA = parent.frame()$losA,
   sd_los = parent.frame()$sd_los
 )
 }
 \arguments{
-\item{est_method}{integer (should be set to 1 or 2). Default 1.}
+\item{est_method}{Integer. Indicates estimation method to use, either 1 or 2.}
 
-\item{losA}{dataframe (with length of stay parameters, imported from excel)}
+\item{losA}{Dataframe.}
 
-\item{sd_los}{number (SD for length of stay). Default 3.}
+\item{sd_los}{Float. Standard deviation for length of stay distribution.}
 }
 \value{
-losA
+losA with new mu, sigma and los_params columns.
 }
 \description{
-Calculates mu and sigma, and stores both within los_params
+Calculates mu and sigma, and stores both within los_params, within the
+length of stay dataframe (losA).
+}
+\examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+losA <- calculate_mu_sigma(est_method = 1, losA = losA, sd_los = 3)
+\dontshow{\}) # examplesIf}
 }
