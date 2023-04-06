@@ -4,10 +4,17 @@
 \alias{create_scenarios}
 \title{Create scenarios}
 \usage{
-create_scenarios(type, arrivals_all, capacity, losA, init_conds)
+create_scenarios(
+  scenarios,
+  arrivals_all = parent.frame()$arrivals_all,
+  capacity = parent.frame()$capacity,
+  losA = parent.frame()$losA,
+  init_conds = parent.frame()$init_conds
+)
 }
 \arguments{
-\item{type}{string "scenarios" or NULL}
+\item{scenarios}{TRUE or FALSE. If set to TRUE, will find rows with
+distinct node and sc_arr}
 
 \item{arrivals_all}{dataframe}
 

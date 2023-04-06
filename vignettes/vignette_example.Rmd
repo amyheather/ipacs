@@ -38,9 +38,9 @@ for (x in seq_along(files[[1]])){
 ```
 
 Use `calculate_mu_sigma` to recalculate mu and sigma in losA dataframe using
-your chosen method, as per est_method
+your chosen method, as per est_method. Default is 1. Default sd_los is 3.
 ``` {r mu_sigma}
-losA <- calculate_mu_sigma(est_method = 1, losA, sd_los = 3)
+losA <- calculate_mu_sigma()
 ```
 
 Set simulation length to the number of unique dates in arrivals
@@ -50,6 +50,6 @@ sim_length <- as.integer(length(unique(arrivals_all$date)))
 
 Create scenarios and arr_scenarios
 ``` {r scenarios}
-scenarios <- create_scenarios("scenarios", arrivals_all, capacity, losA, init_conds)
-arr_scenarios <- create_scenarios("arr_scenarios", arrivals_all, capacity, losA, init_conds)
+scenarios <- create_scenarios(scenarios=TRUE)
+arr_scenarios <- create_scenarios(scenarios=FALSE)
 ```

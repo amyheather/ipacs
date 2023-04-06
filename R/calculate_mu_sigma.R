@@ -2,15 +2,17 @@
 #'
 #' Calculates mu and sigma, and stores both within los_params
 #'
-#' @param est_method integer (should be set to 1 or 2)
+#' @param est_method integer (should be set to 1 or 2). Default 1.
 #' @param losA dataframe (with length of stay parameters, imported from excel)
-#' @param sd_los number (SD for length of stay)
+#' @param sd_los number (SD for length of stay). Default 3.
 #'
 #' @return losA
 #'
 #' @export
 
-calculate_mu_sigma <- function(est_method, losA, sd_los){
+calculate_mu_sigma <- function(est_method = 1,
+                               losA = parent.frame()$losA,
+                               sd_los = 3){
   # Delete columns if they already exist
   losA <- losA[, -which(names(losA) %in% c("mu", "sigma", "los_params"))]
 

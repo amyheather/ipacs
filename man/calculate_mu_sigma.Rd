@@ -4,14 +4,14 @@
 \alias{calculate_mu_sigma}
 \title{Calculate mu and sigma}
 \usage{
-calculate_mu_sigma(est_method, losA, sd_los)
+calculate_mu_sigma(est_method = 1, losA = parent.frame()$losA, sd_los = 3)
 }
 \arguments{
-\item{est_method}{integer (should be set to 1 or 2)}
+\item{est_method}{integer (should be set to 1 or 2). Default 1.}
 
 \item{losA}{dataframe (with length of stay parameters, imported from excel)}
 
-\item{sd_los}{number (SD for length of stay)}
+\item{sd_los}{number (SD for length of stay). Default 3.}
 }
 \value{
 losA
