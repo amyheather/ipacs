@@ -24,11 +24,16 @@ files <- import_file(
   system.file("extdata", "IPACS_20230214_fix.xlsx", package="ipacs"))
 
 for (x in seq_along(files[[1]])){
-  assign(files[[1]][x], files[[2]][x])
+  assign(files[[1]][x], files[[2]][[x]])
 }
 ```
 
 This will produce five dataframes: 
 ```{r, files}
 print(files[[1]])
+```
+
+Recalculate mu and sigma in losA dataframe using chosen method
+``` {r mu_sigma}
+losA <- calculate_mu_sigma(est_method = 1, losA, sd_los = 3)
 ```
