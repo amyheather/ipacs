@@ -4,14 +4,14 @@
 \alias{load_setup}
 \title{Load setup}
 \usage{
-load_setup()
+load_setup(input_filename)
+}
+\arguments{
+\item{input_filename}{A string (name of file with model inputs)}
 }
 \value{
 Runs setup.R script from inst/scripts
 }
 \description{
 Load setup
-}
-\examples{
-load_setup()
 }
