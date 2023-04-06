@@ -18,6 +18,8 @@
 #' * arr_rates
 #' * pathway_vector
 #'
+#' @import tidyverse
+#'
 #' @export
 #'
 #' @examples
