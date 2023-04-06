@@ -23,10 +23,10 @@ devtools::install_github("amyheather/ipacs")
 
 ## Example
 
-This is a basic example:
+This is an example:
 
 ``` r
 library(ipacs)
-## basic example code
-# TO WRITE
+# load_setup()
+# setup_visit <- setup_all("visit")
 ```
