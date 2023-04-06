@@ -2,18 +2,20 @@
 % Please edit documentation in R/import_file.R
 \name{import_file}
 \alias{import_file}
-\title{Import file (test function)}
+\title{Imports the sheets from the excel file with the model parameters
+File should contain sheets "arrivals", "initial conditions", "capacity",
+"los" and "costs"}
 \usage{
-import_file(filename, sheet)
+import_file(filename)
 }
 \arguments{
 \item{filename}{string}
-
-\item{sheet}{string}
 }
 \value{
-file dataframe
+list(df_names, df_list)
 }
 \description{
-Import file (test function)
+Imports the sheets from the excel file with the model parameters
+File should contain sheets "arrivals", "initial conditions", "capacity",
+"los" and "costs"
 }
