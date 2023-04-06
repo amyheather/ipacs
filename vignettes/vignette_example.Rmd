@@ -14,42 +14,49 @@ knitr::opts_chunk$set(
 )
 ```
 
+### Set up
+
 ```{r library}
 library(ipacs)
 ```
 
-Use `import_file` to import sheets from file containing model parameters. This
-will produce 5 dataframes: "arrivals_all", "init_conds", "capacity", "losA" and
-"costs". As R cannot return multiple objects, we return a list of dataframes
-and a list of dataframe names, then use assign to create those in our current
-environment.
+Set value for objects that you may wish to change. In the example, `system.file()` is used to find example data stored in the IPACS package. However, you can input a string with the path to your desired file - e.g. `import_file("myfile.xlsx").
+``` {r set_param}
+input_filename = system.file("extdata", "IPACS_20230214_fix.xlsx", package="ipacs")
+est_method = 1
+sd_los = 3
+```
 
-In the example, `system.file()` is used to find example data stored in the IPACS
-package. However, you can input a string with the path to your desired file - 
-e.g. `import_file("myfile.xlsx").
+Use `import_file` to import sheets from file containing model parameters. This will produce 5 dataframes: "arrivals_all", "init_conds", "capacity", "losA" and "costs". As R cannot return multiple objects, we return a list of dataframes and a list of dataframe names, then use assign to create those in our current environment.
 
 ```{r import}
-files <- import_file(
-  system.file("extdata", "IPACS_20230214_fix.xlsx", package="ipacs"))
-
+files <- import_file(input_filename)
 for (x in seq_along(files[[1]])){
   assign(files[[1]][x], files[[2]][[x]])
 }
 ```
 
-Use `calculate_mu_sigma` to recalculate mu and sigma in losA dataframe using
-your chosen method, as per est_method. Default is 1. Default sd_los is 3.
+Use `calculate_mu_sigma` to recalculate mu and sigma in losA dataframe using your chosen method and sd_los (if applicable).  
 ``` {r mu_sigma}
 losA <- calculate_mu_sigma()
 ```
 
-Set simulation length to the number of unique dates in arrivals
+Set simulation length to the number of unique dates in arrivals.
 ``` {r sim_length}
 sim_length <- as.integer(length(unique(arrivals_all$date)))
 ```
 
-Create scenarios and arr_scenarios
+Use `create_scenarios` to create scenarios and arr_scenarios.
 ``` {r scenarios}
 scenarios <- create_scenarios(scenarios=TRUE)
 arr_scenarios <- create_scenarios(scenarios=FALSE)
+```
+
+### Visit-based simulation (P1)
+Use `sim_setup` to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
+``` {r setup_visit}
+setup_visit <- sim_setup("visit")
+for (i in seq_along(setup_visit[[1]])){
+  assign(setup_visit[[1]][i], setup_visit[[2]][[i]])
+}
 ```

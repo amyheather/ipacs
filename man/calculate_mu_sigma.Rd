@@ -4,7 +4,11 @@
 \alias{calculate_mu_sigma}
 \title{Calculate mu and sigma}
 \usage{
-calculate_mu_sigma(est_method = 1, losA = parent.frame()$losA, sd_los = 3)
+calculate_mu_sigma(
+  est_method = 1,
+  losA = parent.frame()$losA,
+  sd_los = parent.frame()$sd_los
+)
 }
 \arguments{
 \item{est_method}{integer (should be set to 1 or 2). Default 1.}

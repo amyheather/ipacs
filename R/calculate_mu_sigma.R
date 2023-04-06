@@ -12,7 +12,7 @@
 
 calculate_mu_sigma <- function(est_method = 1,
                                losA = parent.frame()$losA,
-                               sd_los = 3){
+                               sd_los = parent.frame()$sd_los){
   # Delete columns if they already exist
   losA <- losA[, -which(names(losA) %in% c("mu", "sigma", "los_params"))]
 
