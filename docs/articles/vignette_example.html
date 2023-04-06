@@ -77,36 +77,57 @@
 
     
     
+<div class="section level3">
+<h3 id="set-up">Set up<a class="anchor" aria-label="anchor" href="#set-up"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amyheather/ipacs" class="external-link">ipacs</a></span><span class="op">)</span></span></code></pre></div>
+<p>Set value for objects that you may wish to change. In the example,
+<code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code> is used to find example data stored in the
+IPACS package. However, you can input a string with the path to your
+desired file - e.g. `import_file(“myfile.xlsx”).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">input_filename</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"IPACS_20230214_fix.xlsx"</span>, package<span class="op">=</span><span class="st">"ipacs"</span><span class="op">)</span></span>
+<span><span class="va">est_method</span> <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="va">sd_los</span> <span class="op">=</span> <span class="fl">3</span></span></code></pre></div>
 <p>Use <code>import_file</code> to import sheets from file containing
 model parameters. This will produce 5 dataframes: “arrivals_all”,
 “init_conds”, “capacity”, “losA” and “costs”. As R cannot return
 multiple objects, we return a list of dataframes and a list of dataframe
 names, then use assign to create those in our current environment.</p>
-<p>In the example, <code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code> is used to find example
-data stored in the IPACS package. However, you can input a string with
-the path to your desired file - e.g. `import_file(“myfile.xlsx”).</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_file.html">import_file</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"IPACS_20230214_fix.xlsx"</span>, package<span class="op">=</span><span class="st">"ipacs"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_file.html">import_file</a></span><span class="op">(</span><span class="va">input_filename</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">x</span><span class="op">]</span>, <span class="va">files</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Use <code>calculate_mu_sigma</code> to recalculate mu and sigma in
-losA dataframe using your chosen method, as per est_method. Default is
-1. Default sd_los is 3.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">losA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_mu_sigma.html">calculate_mu_sigma</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Set simulation length to the number of unique dates in arrivals</p>
+losA dataframe using your chosen method and sd_los (if applicable).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sim_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">arrivals_all</span><span class="op">$</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Create scenarios and arr_scenarios</p>
+<code class="sourceCode R"><span><span class="va">losA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_mu_sigma.html">calculate_mu_sigma</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Set simulation length to the number of unique dates in arrivals.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sim_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">arrivals_all</span><span class="op">$</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Use <code>create_scenarios</code> to create scenarios and
+arr_scenarios.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_scenarios.html">create_scenarios</a></span><span class="op">(</span>scenarios<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">arr_scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_scenarios.html">create_scenarios</a></span><span class="op">(</span>scenarios<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-  </main>
+</div>
+<div class="section level3">
+<h3 id="visit-based-simulation-p1">Visit-based simulation (P1)<a class="anchor" aria-label="anchor" href="#visit-based-simulation-p1"></a>
+</h3>
+<p>Use <code>sim_setup</code> to create objects for visit-based
+simulation. These are returned in a list, so use assign to extract and
+add to environment.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">setup_visit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_setup.html">sim_setup</a></span><span class="op">(</span><span class="st">"visit"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; character(0)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">setup_visit</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
