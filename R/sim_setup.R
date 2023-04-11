@@ -33,9 +33,9 @@ sim_setup <- function(model_type,
   }
 
   # Extract appropriate rows from scenarios, arr_scenarios and costs
-  scenarios <- scenarios %>% filter(str_detect("node", "pathway"))
-  arr_scenarios <- arr_scenarios %>% filter(str_detect("node", "pathway"))
-  costs <- costs %>% filter(str_detect("node", "pathway"))
+  scenarios <- scenarios[str_detect(scenarios$node, pathway),]
+  arr_scenarios <- arr_scenarios[str_detect(arr_scenarios$node, pathway),]
+  costs <- costs[str_detect(costs$node, pathway),]
 
   # Extract parameters from scenarios dataframe
   init_occ <- as.list(scenarios$occ)
