@@ -2,7 +2,7 @@
 title: "How to run the IPACS model"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{vignette_example}
+  %\VignetteIndexEntry{How to run the IPACS model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
