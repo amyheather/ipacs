@@ -17,15 +17,15 @@ add_patient(
 \item{in_system}{boolean (TRUE or FALSE) - is the patient already in the
 system? If so, will produce adjusted length of stay and visit rates.}
 
-\item{id}{integer}
+\item{id}{integer - ID number}
 
-\item{npat}{integer}
+\item{npat}{integer - number of patients}
 
-\item{req_visits}{tbc}
+\item{req_visits}{list - to store require visit vectors for each patient}
 
-\item{patients}{dataframe}
+\item{patients}{dataframe - to store information about each patient (from create_patient_df())}
 
-\item{resources}{dataframe}
+\item{resources}{dataframe - to capture information on available resources}
 }
 \value{
 List with updated id, npat, req_visits, patients, resources objects

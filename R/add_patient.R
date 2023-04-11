@@ -9,11 +9,11 @@
 #'
 #' @param in_system boolean (TRUE or FALSE) - is the patient already in the
 #' system? If so, will produce adjusted length of stay and visit rates.
-#' @param id integer
-#' @param npat integer
-#' @param req_visits tbc
-#' @param patients dataframe
-#' @param resources dataframe
+#' @param id integer - ID number
+#' @param npat integer - number of patients
+#' @param req_visits list - to store require visit vectors for each patient
+#' @param patients dataframe - to store information about each patient (from create_patient_df())
+#' @param resources dataframe - to capture information on available resources
 #'
 #' @importFrom utils tail
 #'
