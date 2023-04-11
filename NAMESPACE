@@ -3,6 +3,7 @@
 export(calculate_mu_sigma)
 export(create_scenarios)
 export(dis_los)
+export(dis_los2)
 export(import_file)
 export(sim_setup)
 importFrom(dplyr,arrange)
