@@ -10,3 +10,8 @@ reference:
   - calculate_mu_sigma
   - create_scenarios
   - sim_setup
+- title: Visit
+  desc: Functions just used by visit-based simulation
+- contents:
+  - dis_los
+  - dis_los2

@@ -82,14 +82,27 @@
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/amyheather/ipacs" class="external-link">ipacs</a></span><span class="op">)</span></span></code></pre></div>
-<p>Set value for objects that you may wish to change. In the example,
+<p>Set value for objects that you may wish to change. In this example,
 <code><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file()</a></code> is used to find example data stored in the
 IPACS package. However, you can input a string with the path to your
 desired file - e.g. `import_file(“myfile.xlsx”).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">input_filename</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"IPACS_20230214_fix.xlsx"</span>, package<span class="op">=</span><span class="st">"ipacs"</span><span class="op">)</span></span>
-<span><span class="va">est_method</span> <span class="op">=</span> <span class="fl">1</span></span>
-<span><span class="va">sd_los</span> <span class="op">=</span> <span class="fl">3</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># String with file path for excel sheet with model inputs</span></span>
+<span><span class="va">input_filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"IPACS_20230214_fix.xlsx"</span>, package<span class="op">=</span><span class="st">"ipacs"</span><span class="op">)</span></span>
+<span><span class="co"># Method for estimation of mu and sigma (for calculate_mu_sigma())</span></span>
+<span><span class="va">est_method</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="co"># Standard deviation for length of stay</span></span>
+<span><span class="va">sd_los</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
+<span><span class="co"># Number of runs for each simulation</span></span>
+<span><span class="va">nruns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co"># Standard deviation for initial service/visit rate (ISR/IVR)</span></span>
+<span><span class="va">sd_isr</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
+<span><span class="co"># Standard deviation for end service rate/final visit rate (ESR/FVR)</span></span>
+<span><span class="va">sd_esr</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
+<span><span class="co"># Temporary seed</span></span>
+<span><span class="va">temp_seed</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="co"># Warmup length</span></span>
+<span><span class="va">warmup</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></code></pre></div>
 <p>Use <code>import_file</code> to import sheets from file containing
 model parameters. This will produce 5 dataframes: “arrivals_all”,
 “init_conds”, “capacity”, “losA” and “costs”. As R cannot return
@@ -121,10 +134,39 @@ simulation. These are returned in a list, so use assign to extract and
 add to environment.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">setup_visit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_setup.html">sim_setup</a></span><span class="op">(</span><span class="st">"visit"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; character(0)</span></span>
+<span><span class="co">#&gt; c("P1_B_BCap_Blos_BArr", "P1_B_BCap_S1los_BArr", "P1_B_BCap_S2los_BArr", </span></span>
+<span><span class="co">#&gt; "P1_B_S1Cap_Blos_BArr", "P1_B_S1Cap_S1los_BArr", "P1_B_S1Cap_S2los_BArr", </span></span>
+<span><span class="co">#&gt; "P1_B_BCap_Blos_S1Arr", "P1_B_BCap_S1los_S1Arr", "P1_B_BCap_S2los_S1Arr", </span></span>
+<span><span class="co">#&gt; "P1_B_S1Cap_Blos_S1Arr", "P1_B_S1Cap_S1los_S1Arr", "P1_B_S1Cap_S2los_S1Arr", </span></span>
+<span><span class="co">#&gt; "P1_NS_BCap_Blos_BArr", "P1_NS_BCap_S1los_BArr", "P1_NS_BCap_S2los_BArr", </span></span>
+<span><span class="co">#&gt; "P1_NS_S1Cap_Blos_BArr", "P1_NS_S1Cap_S1los_BArr", "P1_NS_S1Cap_S2los_BArr", </span></span>
+<span><span class="co">#&gt; "P1_NS_BCap_Blos_S1Arr", "P1_NS_BCap_S1los_S1Arr", "P1_NS_BCap_S2los_S1Arr", </span></span>
+<span><span class="co">#&gt; "P1_NS_S1Cap_Blos_S1Arr", "P1_NS_S1Cap_S1los_S1Arr", "P1_NS_S1Cap_S2los_S1Arr", </span></span>
+<span><span class="co">#&gt; "P1_SG_BCap_Blos_BArr", "P1_SG_BCap_S1los_BArr", "P1_SG_BCap_S2los_BArr", </span></span>
+<span><span class="co">#&gt; "P1_SG_S1Cap_Blos_BArr", "P1_SG_S1Cap_S1los_BArr", "P1_SG_S1Cap_S2los_BArr", </span></span>
+<span><span class="co">#&gt; "P1_SG_BCap_Blos_S1Arr", "P1_SG_BCap_S1los_S1Arr", "P1_SG_BCap_S2los_S1Arr", </span></span>
+<span><span class="co">#&gt; "P1_SG_S1Cap_Blos_S1Arr", "P1_SG_S1Cap_S1los_S1Arr", "P1_SG_S1Cap_S2los_S1Arr"</span></span>
+<span><span class="co">#&gt; )</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">setup_visit</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+<p>Create objects with initial service rate (ISR), end service rate
+(ESR), and their standard deviations (SD). The SD objects are lists that
+repeat the SD for the number of visit scenarios.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">isr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">$</span><span class="va">IVR</span><span class="op">)</span></span>
+<span><span class="va">end_sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">$</span><span class="va">FVR</span><span class="op">)</span></span>
+<span><span class="va">sd_isr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">sd_isr</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sd_esr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">sd_esr</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Create n_slots, the number of visit slots available per day. This is
+based on an average visit rate (as from mean of isr and end_sr)
+multiplied by the capacity for P1 (cap_visit)</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n_slots</span>  <span class="op">&lt;-</span> <span class="va">cap_visit</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">isr</span>, <span class="va">end_sr</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Create object to store outputs from each scenario</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">visits_based_output</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">visits_based_output_q</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -10,15 +10,15 @@ dis_los2(long_los)
 \item{long_los}{float - length of stay (output by dis_los())}
 }
 \value{
-as.integer(x) float - shortened length of stay
+Integer - shortened length of stay
 }
 \description{
 Reduces length of stay for patients already in service
 }
 \details{
 Samples from uniform distribution between 1 and the length of stay
-(produced by dis_los()).
-Assumption: All patients stay at least 1 day
+(produced by dis_los()). Rounds to nearest integer. Assumption: All patients
+stay at least 1 day.
 }
 \examples{
 dis_los2(18.34)

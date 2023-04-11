@@ -19,10 +19,10 @@
 #'
 #' @examples
 #' dis_los(z = "P1_B_BCap_Blos_BArr",
-#' los_dist = "lnorm",
-#' los_lnorm_mean_sd = c(2.197225, 1.180702),
-#' los_norm_mean = 18.07,
-#' los_norm_sd = 3)
+#'         los_dist = "lnorm",
+#'         los_lnorm_mean_sd = c(2.197225, 1.180702),
+#'         los_norm_mean = 18.07,
+#'         los_norm_sd = 3)
 dis_los <- function(z = parent.frame()$z,
                     los_dist = parent.frame()$srv_dist_visit[[z]],
                     los_lnorm_mean_sd = parent.frame()$srv_params_visit[[z]],
