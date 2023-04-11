@@ -13,7 +13,7 @@ dis_los(
 )
 }
 \arguments{
-\item{z}{scenario}
+\item{z}{string - scenario}
 
 \item{los_dist}{the distribution type (e.g. "lnorm") - default is from srv_dist_visit}
 
