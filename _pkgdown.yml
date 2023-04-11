@@ -21,3 +21,4 @@ reference:
   - create_output_df
   - create_wait_df
   - create_summary_df
+  - add_patient
