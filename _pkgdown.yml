@@ -18,4 +18,6 @@ reference:
   - dis_init_slots
   - dis_end_slots
   - create_patient_df
-
+  - create_output_df
+  - create_wait_df
+  - create_summary_df
