@@ -2,3 +2,11 @@ url: ~
 template:
   bootstrap: 5
 
+reference:
+- title: Set-up
+  desc: Functions used for set-up for visit-based and bed-based simulations
+- contents:
+  - import_file
+  - calculate_mu_sigma
+  - create_scenarios
+  - sim_setup
