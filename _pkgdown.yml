@@ -17,3 +17,5 @@ reference:
   - dis_los2
   - dis_init_slots
   - dis_end_slots
+  - create_patient_df
+
