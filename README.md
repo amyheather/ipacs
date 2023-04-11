@@ -11,6 +11,9 @@ between Acute, Community and Social care (IPACS)”, converted into a
 package format. These are models used for D2A resource planning. They
 include re-coding and bug fixes from Amy Heather.
 
+For an explanation on how to run the model, [view the GitHub pages
+site](amyheather.github.io/ipacs/).
+
 ## Installation
 
 You can install the development version of ipacs from GitHub with:
