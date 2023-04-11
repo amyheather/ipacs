@@ -13,20 +13,10 @@ include re-coding and bug fixes from Amy Heather.
 
 ## Installation
 
-You can install the development version of ipacs from
-[GitHub](https://github.com/) with:
+You can install the development version of ipacs from GitHub with:
 
 ``` r
 # install.packages("devtools")
+# library("devtools")
 devtools::install_github("amyheather/ipacs")
-```
-
-## Example
-
-This is an example:
-
-``` r
-library(ipacs)
-# load_setup()
-# setup_visit <- setup_all("visit")
 ```
