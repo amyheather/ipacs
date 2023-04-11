@@ -2,6 +2,7 @@
 
 export(calculate_mu_sigma)
 export(create_scenarios)
+export(dis_init_slots)
 export(dis_los)
 export(dis_los2)
 export(import_file)
