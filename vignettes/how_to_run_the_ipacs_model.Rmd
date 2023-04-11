@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ### Set up
-
+You can install the development version of ipacs from GitHub with `devtools::install_github("amyheather/ipacs")`. You will first need to install devtools, if not already installed. Then, load the ipacs package using `library()`.
 ```{r library}
 library(ipacs)
 ```
