@@ -15,3 +15,5 @@ reference:
 - contents:
   - dis_los
   - dis_los2
+  - dis_init_slots
+  - dis_end_slots
