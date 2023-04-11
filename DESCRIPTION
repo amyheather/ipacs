@@ -12,7 +12,8 @@ Imports:
     tidyr,
     purrr,
     rlang,
-    stringr
+    stringr,
+    stats
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
