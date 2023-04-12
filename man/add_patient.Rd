@@ -10,7 +10,18 @@ add_patient(
   npat = parent.frame()$npat,
   req_visits = parent.frame()$req_visits,
   patients = parent.frame()$patients,
-  resources = parent.frame()$resources
+  resources = parent.frame()$resources,
+  t = parent.frame()$t,
+  z = parent.frame()$z,
+  srv_dist_visit = parent.frame()$srv_dist_visit,
+  srv_params_visit = parent.frame()$srv_params_visit,
+  mean_los_visit = parent.frame()$mean_los_visit,
+  sd_los_visit = parent.frame()$sd_los_visit,
+  isr = parent.frame()$isr,
+  sd_isr = parent.frame()$sd_isr,
+  n_slots = parent.frame()$n_slots,
+  end_sr = parent.frame()$end_sr,
+  sd_esr = parent.frame()$sd_esr
 )
 }
 \arguments{
@@ -26,6 +37,28 @@ system? If so, will produce adjusted length of stay and visit rates.}
 \item{patients}{dataframe - to store information about each patient (from create_patient_df())}
 
 \item{resources}{dataframe - to capture information on available resources}
+
+\item{t}{tbc}
+
+\item{z}{tbc}
+
+\item{srv_dist_visit}{tbc}
+
+\item{srv_params_visit}{tbc}
+
+\item{mean_los_visit}{tbc}
+
+\item{sd_los_visit}{tbc}
+
+\item{isr}{tbc}
+
+\item{sd_isr}{tbc}
+
+\item{n_slots}{tbc}
+
+\item{end_sr}{tbc}
+
+\item{sd_esr}{tbc}
 }
 \value{
 List with updated id, npat, req_visits, patients, resources objects

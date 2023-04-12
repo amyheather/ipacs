@@ -13,6 +13,11 @@
 #' @param end_sr tbc
 #' @param mean_los_visit tbc
 #' @param costs_visit tbc
+#' @param srv_dist_visit tbc
+#' @param srv_params_visit tbc
+#' @param sd_los_visit tbc
+#' @param sd_isr tbc
+#' @param sd_esr tbc
 #'
 #' @importFrom parallel makeCluster detectCores stopCluster
 #' @importFrom doSNOW registerDoSNOW
@@ -25,6 +30,7 @@
 #' @return List containing visits_based_output and visits_based_output_q
 #' @export
 run_visit_sim <- function(
+    # For this function
     pathway_vector_visit = parent.frame()$pathway_vector_visit,
     nruns = parent.frame()$nruns,
     temp_seed = parent.frame()$temp_seed,
@@ -37,7 +43,15 @@ run_visit_sim <- function(
     isr = parent.frame()$isr,
     end_sr = parent.frame()$end_sr,
     mean_los_visit = parent.frame()$mean_los_visit,
-    costs_visit = parent.frame()$costs_visit){
+    costs_visit = parent.frame()$costs_visit,
+    # Inputs for dis_los() (plus mean_los_visit above)
+    srv_dist_visit = parent.frame()$srv_dist_visit,
+    srv_params_visit = parent.frame()$srv_params_visit,
+    sd_los_visit = parent.frame()$sd_los_visit,
+    # Inputs for dis_init_slots() (plus isr + n_slots above)
+    sd_isr = parent.frame()$sd_isr,
+    # Inputs for dis_end_slots() (plus end_sr above)
+    sd_esr = parent.frame()$sd_esr){
   # Repeat for each scenario in visit-based pathways
   for (z in seq_along(pathway_vector_visit)) {
     # detectCores() but -1 as want to make you you have one left to do other
@@ -48,7 +62,7 @@ run_visit_sim <- function(
     run <- 1
 
     # Use foreach() to repeat operation for each run
-    results <- foreach(run = 1:nruns, .combine = "rbind") %dopar% {
+    results <- foreach(run = 1:nruns, .combine = "rbind", .packages=c("ipacs", "stats", "dplyr", "stringr", "magrittr")) %dopar% {
       set.seed(nruns * (temp_seed - 1) + run)
 
       # Output variables

@@ -40,7 +40,7 @@ temp_seed <- 1
 warmup <- 0
 ```
 
-Use `import_file` to import sheets from file containing model parameters. This will produce 5 dataframes: "arrivals_all", "init_conds", "capacity", "losA" and "costs". As R cannot return multiple objects, we return a list of dataframes and a list of dataframe names, then use assign to create those in our current environment.
+Use [`import_file`](https://amyheather.github.io/ipacs/reference/import_file.html) to import sheets from file containing model parameters. This will produce 5 dataframes: "arrivals_all", "init_conds", "capacity", "losA" and "costs". As R cannot return multiple objects, we return a list of dataframes and a list of dataframe names, then use assign to create those in our current environment.
 ```{r import}
 files <- import_file(input_filename)
 for (x in seq_along(files[[1]])){
@@ -48,7 +48,7 @@ for (x in seq_along(files[[1]])){
 }
 ```
 
-Use `calculate_mu_sigma` to recalculate mu and sigma in losA dataframe using your chosen method and sd_los (if applicable).  
+Use [`calculate_mu_sigma`](https://amyheather.github.io/ipacs/reference/calculate_mu_sigma.html) to recalculate mu and sigma in losA dataframe using your chosen method and sd_los (if applicable).  
 ``` {r mu_sigma}
 losA <- calculate_mu_sigma()
 ```
@@ -58,14 +58,14 @@ Set simulation length to the number of unique dates in arrivals.
 sim_length <- as.integer(length(unique(arrivals_all$date)))
 ```
 
-Use `create_scenarios` to create scenarios and arr_scenarios.
+Use [`create_scenarios`](https://amyheather.github.io/ipacs/reference/create_scenarios.html) to create scenarios and arr_scenarios.
 ``` {r scenarios}
 scenarios <- create_scenarios(scenarios=TRUE)
 arr_scenarios <- create_scenarios(scenarios=FALSE)
 ```
 
 ### Visit-based simulation (P1)
-Use `sim_setup` to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
+Use[ [`sim_setup`](https://amyheather.github.io/ipacs/reference/sim_setup.html) to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
 ``` {r setup_visit}
 setup_visit <- sim_setup("visit")
 for (i in seq_along(setup_visit[[1]])){
@@ -90,4 +90,9 @@ Create object to store outputs from each scenario
 ``` {r null_output}
 visits_based_output <- NULL
 visits_based_output_q <- NULL
+```
+
+Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
+``` {r run_visit}
+# visit_sim_result <- run_visit_sim()
 ```

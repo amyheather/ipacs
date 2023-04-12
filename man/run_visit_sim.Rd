@@ -17,7 +17,12 @@ run_visit_sim(
   isr = parent.frame()$isr,
   end_sr = parent.frame()$end_sr,
   mean_los_visit = parent.frame()$mean_los_visit,
-  costs_visit = parent.frame()$costs_visit
+  costs_visit = parent.frame()$costs_visit,
+  srv_dist_visit = parent.frame()$srv_dist_visit,
+  srv_params_visit = parent.frame()$srv_params_visit,
+  sd_los_visit = parent.frame()$sd_los_visit,
+  sd_isr = parent.frame()$sd_isr,
+  sd_esr = parent.frame()$sd_esr
 )
 }
 \arguments{
@@ -46,6 +51,16 @@ run_visit_sim(
 \item{mean_los_visit}{tbc}
 
 \item{costs_visit}{tbc}
+
+\item{srv_dist_visit}{tbc}
+
+\item{srv_params_visit}{tbc}
+
+\item{sd_los_visit}{tbc}
+
+\item{sd_isr}{tbc}
+
+\item{sd_esr}{tbc}
 }
 \value{
 List containing visits_based_output and visits_based_output_q

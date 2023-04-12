@@ -14,17 +14,45 @@
 #' @param req_visits list - to store require visit vectors for each patient
 #' @param patients dataframe - to store information about each patient (from create_patient_df())
 #' @param resources dataframe - to capture information on available resources
+#' @param t tbc
+#' @param z tbc
+#' @param srv_dist_visit tbc
+#' @param srv_params_visit tbc
+#' @param mean_los_visit tbc
+#' @param sd_los_visit tbc
+#' @param isr tbc
+#' @param sd_isr tbc
+#' @param n_slots tbc
+#' @param end_sr tbc
+#' @param sd_esr tbc
 #'
 #' @importFrom utils tail
 #'
 #' @return List with updated id, npat, req_visits, patients, resources objects
 #' @export
 add_patient <- function(in_system,
+                        # Inputs for this function
                         id = parent.frame()$id,
                         npat = parent.frame()$npat,
                         req_visits = parent.frame()$req_visits,
                         patients = parent.frame()$patients,
-                        resources = parent.frame()$resources){
+                        resources = parent.frame()$resources,
+                        t = parent.frame()$t,
+                        # Inputs for dis_los(), dis_init_slots() and dis_end_slots()
+                        z = parent.frame()$z,
+                        # Inputs for dis_los()
+                        srv_dist_visit = parent.frame()$srv_dist_visit,
+                        srv_params_visit = parent.frame()$srv_params_visit,
+                        mean_los_visit = parent.frame()$mean_los_visit,
+                        sd_los_visit = parent.frame()$sd_los_visit,
+                        # Inputs for dis_init_slots()
+                        isr = parent.frame()$isr,
+                        sd_isr = parent.frame()$sd_isr,
+                        n_slots = parent.frame()$n_slots,
+                        # Inputs for dis_end_slots()
+                        end_sr = parent.frame()$end_sr,
+                        sd_esr = parent.frame()$sd_esr){
+
   # Increment ID and npat
   id <- id + 1
   npat <- npat + 1
@@ -82,8 +110,7 @@ add_patient <- function(in_system,
       patients$start_service[npat] <- tt
       patients$end_service[npat] <- tt + los_adj
       # Decrease capacity
-      resources[tt:(tt + los_adj), ] <-
-        resources[tt:(tt + los_adj), ] - req_visits[[id]]
+      resources[tt:(tt + los_adj), ] <- resources[tt:(tt + los_adj), ] - req_visits[[id]]
     } else {
       # If no sufficient resources, check for starting on the next day
       tt <- tt + 1

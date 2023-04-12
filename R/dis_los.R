@@ -6,7 +6,7 @@
 #' that is >=0 and <= the max LOS. Uses do.call() as we need to input
 #' mean and SD for rlnorm() from a list
 #'
-#' @param z string - scenario
+#' @param z integer - scenario number
 #' @param los_dist the distribution type (e.g. "lnorm") - default is from srv_dist_visit
 #' @param los_lnorm_mean_sd the mean and SD for the lnorm distribution - default is from srv_params_visit
 #' @param los_norm_mean the mean for the other distribution type - default is from mean_los_visit
@@ -18,7 +18,7 @@
 #' @export
 #'
 #' @examples
-#' dis_los(z = "P1_B_BCap_Blos_BArr",
+#' dis_los(z = 1,
 #'         los_dist = "lnorm",
 #'         los_lnorm_mean_sd = c(2.197225, 1.180702),
 #'         los_norm_mean = 18.07,

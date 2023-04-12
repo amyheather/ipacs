@@ -13,7 +13,7 @@ dis_los(
 )
 }
 \arguments{
-\item{z}{string - scenario}
+\item{z}{integer - scenario number}
 
 \item{los_dist}{the distribution type (e.g. "lnorm") - default is from srv_dist_visit}
 
@@ -33,7 +33,7 @@ that is >=0 and <= the max LOS. Uses do.call() as we need to input
 mean and SD for rlnorm() from a list
 }
 \examples{
-dis_los(z = "P1_B_BCap_Blos_BArr",
+dis_los(z = 1,
         los_dist = "lnorm",
         los_lnorm_mean_sd = c(2.197225, 1.180702),
         los_norm_mean = 18.07,
