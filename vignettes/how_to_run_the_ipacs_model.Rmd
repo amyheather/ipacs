@@ -94,5 +94,5 @@ visits_based_output_q <- NULL
 
 Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
 ``` {r run_visit}
-# visit_sim_result <- run_visit_sim()
+visit_sim_result <- run_visit_sim()
 ```
