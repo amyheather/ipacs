@@ -24,6 +24,8 @@ Set value for objects that you may wish to change. In this example, `system.file
 ``` {r set_param}
 # String with file path for excel sheet with model inputs
 input_filename <- system.file("extdata", "IPACS_20230214_fix.xlsx", package="ipacs")
+# Path to save output files to
+visit_filename <- "../inst/extdata/visit_output_using_IPACS_20230214_fix.csv"
 # Method for estimation of mu and sigma (for calculate_mu_sigma())
 est_method <- 1
 # Standard deviation for length of stay
@@ -91,42 +93,29 @@ n_slots  <- cap_visit * mean(c(isr, end_sr))
 
 Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
 ``` {r run_visit}
-visit_sim_result <- run_visit_sim()
-visits_based_output <- visit_sim_result[[1]]
-visits_based_output_q <- visit_sim_result[[2]]
+# visit_sim_result <- run_visit_sim()
+# visits_based_output <- visit_sim_result[[1]]
+# visits_based_output_q <- visit_sim_result[[2]]
 ```
 
-Extract and pivot results for NIQ, OCC, wait and costs, then append together, along with dates. Then save to csv with output filename based on input filename.
+Use `save_visit()` to extract results for each date for number in queue, occupancy, wait and costs and then save to csv.
 ``` {r output_visit}
-# CHANGE TO FUNCTION and FIX FILENAME ISSUE
-library(tidyr)
-outcomes <- c("niq", "occ", "wait", "cost")
-ptvisits_list <- list(arr_rates_visit["date"])
-for (i in seq_along(outcomes)){
-  ptvisits_list[[i + 1]] <- visits_based_output[c("day", "scen_",
-                                                  outcomes[i])] %>%
-    pivot_wider(names_from = "scen_", values_from = as.name(outcomes[i])) %>%
-    select(-day) %>%
-    setNames(paste0(names(.), "__", outcomes[i]))
-}
-means_output_v <- do.call("cbind", ptvisits_list)
-visit_filename <- "../inst/extdata/visit_output_using_IPACS_20230214_fix.csv"
-utils::write.csv(means_output_v, visit_filename, row.names = FALSE)
+# save_visit(visit_filename)
 ```
 
 Correct date formatting, and save the quantiles to csv for optional stochastic report. Saved in long format for plotting
 ``` {r stoch_visit}
 # AS ABOVE
-visits_based_output_q$date <- as.Date(visits_based_output_q$date)
-visit_stoch_filename <- "../inst/extdata/stochastic_visit_output_using_IPACS_20230214_fix.csv"
-write.csv(visits_based_output_q, visit_stoch_filename, row.names = FALSE)
+# visits_based_output_q$date <- as.Date(visits_based_output_q$date)
+# visit_stoch_filename <- "../inst/extdata/stochastic_visit_output_using_IPACS_20230214_fix.csv"
+# write.csv(visits_based_output_q, visit_stoch_filename, row.names = FALSE)
 ```
 
 ### Testing
 Checks that output from simulations matchs outputs from IPACS_MODEL repository.
 ``` {r visit_test}
-library(diffdf)
-test_visit <- read.csv("../inst/extdata/visit_testing_using_IPACS_20230214_fix.csv")
-new_visit <- read.csv("../inst/extdata/visit_output_using_IPACS_20230214_fix.csv")
-diffdf::diffdf(new_visit, test_visit)
+# library(diffdf)
+# test_visit <- read.csv("../inst/extdata/visit_testing_using_IPACS_20230214_fix.csv")
+# new_visit <- read.csv("../inst/extdata/visit_output_using_IPACS_20230214_fix.csv")
+# diffdf(new_visit, test_visit)
 ```
