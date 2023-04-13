@@ -71,7 +71,9 @@ run_visit_sim <- function(
 
     # Use foreach() to repeat operation for each run
     results <- foreach(run = 1:nruns, .combine = "rbind",
-                       .packages=c("parallel", "doSNOW", "foreach", "ipacs", "stats", "dplyr", "stringr", "magrittr")) %do% {
+                       .packages=c("parallel", "doSNOW", "foreach", "ipacs",
+                                   "stats", "dplyr", "stringr", "magrittr")) %do% {
+      # Set seed
       set.seed(nruns * (temp_seed - 1) + run)
 
       # Output variables
