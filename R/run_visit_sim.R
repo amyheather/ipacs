@@ -21,7 +21,7 @@
 #'
 #' @importFrom parallel makeCluster detectCores stopCluster
 #' @importFrom doSNOW registerDoSNOW
-#' @importFrom foreach foreach %do%
+#' @importFrom foreach foreach %dopar%
 #' @importFrom stats rpois quantile
 #' @importFrom dplyr mutate_at group_by summarise ungroup rename_at left_join
 #' @importFrom stringr str_split
@@ -62,8 +62,8 @@ run_visit_sim <- function(
     # detectCores() but -1 as want to make you you have one left to do other
     # stuff on. Cores are processors that can work on tasks. Then makecluster()
     # to set the amount of clusters you want your code to run on
-    # cl <- parallel::makeCluster(detectCores() - 1)
-    # registerDoSNOW(cl)
+    cl <- parallel::makeCluster(detectCores() - 1)
+    registerDoSNOW(cl)
     run <- 1
 
     # Not used, but a temporary fix to allow foreach to access objects, as
@@ -75,8 +75,12 @@ run_visit_sim <- function(
 
     # Use foreach() to repeat operation for each run
     results <- foreach(run = 1:nruns, .combine = "rbind",
+                       .export=c("pathway_vector_visit", "nruns", "temp_seed", "sim_length", "warmup",
+                                 "n_slots", "init_occ_visit", "init_niq_visit", "arr_rates_visit",
+                                 "isr", "end_sr", "mean_los_visit", "costs_visit", "srv_dist_visit",
+                                 "srv_params_visit", "sd_los_visit", "sd_isr", "sd_esr"),
                        .packages=c("parallel", "doSNOW", "foreach", "ipacs",
-                                   "stats", "dplyr", "stringr", "magrittr")) %do% {
+                                   "stats", "dplyr", "stringr", "magrittr")) %dopar% {
       # Set seed
       set.seed(nruns * (temp_seed - 1) + run)
 
@@ -192,7 +196,7 @@ run_visit_sim <- function(
 
       return(list)
     }
-    # stopCluster(cl)
+    stopCluster(cl)
 
     # Extract results from above (contains results from each run)...
 
