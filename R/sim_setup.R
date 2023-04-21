@@ -65,8 +65,8 @@ sim_setup <- function(model_type,
     arrange(.data$date) %>%
     as.data.frame()
 
-  # Create vector with each scenario name (dput is just to print to screen)
-  pathway_vector <- dput(colnames(arr_rates %>% select(-.data$date)))
+  # Create vector with each scenario name
+  pathway_vector <- colnames(arr_rates %>% select(-.data$date))
 
   # Create list of names objects to return, use mget() to get the objects,
   # and create list with names specific to the model type

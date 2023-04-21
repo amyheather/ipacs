@@ -2,31 +2,28 @@
 % Please edit documentation in R/save_visit.R
 \name{save_visit}
 \alias{save_visit}
-\title{Save output from visit-based simulation}
+\title{Save standard output from visit-based simulation}
 \usage{
 save_visit(
   visit_filename,
   arr_rates_visit = parent.frame()$arr_rates_visit,
-  outcomes = parent.frame()$outcomes,
   visits_based_output = parent.frame()$visits_based_output
 )
 }
 \arguments{
 \item{visit_filename}{string - path to save output csv to}
 
-\item{arr_rates_visit}{tbc}
+\item{arr_rates_visit}{Dataframe - first column is date, subsequent columns
+are each scenario, with elements of dataframe being the arrival rate for
+each scenario and date, e.g. data.frame(date = as.Date(c("2023-01-01",
+"2023-01-02")), P1_B_BCap_Blos_BArr = c(3.790697, 3.047619))}
 
-\item{outcomes}{tbc}
-
-\item{visits_based_output}{tbc}
+\item{visits_based_output}{Dataframe with results from visit-based simulation}
 }
 \value{
-saves csv to specified location
+Saves csv to specified location
 }
 \description{
-Extract results for each date for number in queue, occupancy, wait and costs and then save to csv
-}
-\details{
 Extract results from visit-based simulation output for NIQ, OCC, wait and
 costs, then append together, along with dates. Save this to a csv using the
 output filename specified.

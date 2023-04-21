@@ -1,10 +1,24 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- index.md is generated from index.Rmd. Please edit that file -->
 
 # IPACS
 
-<!-- badges: start -->
-<!-- badges: end -->
+## How do I run the model?
+
+An explanation of how to install the package and run the model is
+available on the article [“How to run the IPACS
+model”](https://amyheather.github.io/ipacs/articles/how_to_run_the_ipacs_model.html).
+
+## Function documentation
+
+To view function documentation, go to the [function
+reference](https://amyheather.github.io/ipacs/reference/index.html)
+page.
+
+## Link to github repo
+
+To view the GitHub repo for this package, visit
+<https://github.com/amyheather>
 
 This repository contains models from the project “Improving Patient flow
 between Acute, Community and Social care (IPACS)”, converted into a

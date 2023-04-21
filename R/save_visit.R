@@ -1,26 +1,25 @@
-#' Save output from visit-based simulation
-#'
-#' Extract results for each date for number in queue, occupancy, wait and costs and then save to csv
+#' Save standard output from visit-based simulation
 #'
 #' Extract results from visit-based simulation output for NIQ, OCC, wait and
 #' costs, then append together, along with dates. Save this to a csv using the
 #' output filename specified.
 #'
 #' @param visit_filename string - path to save output csv to
-#' @param arr_rates_visit tbc
-#' @param outcomes tbc
-#' @param visits_based_output tbc
+#' @param arr_rates_visit Dataframe - first column is date, subsequent columns
+#'  are each scenario, with elements of dataframe being the arrival rate for
+#'  each scenario and date, e.g. data.frame(date = as.Date(c("2023-01-01",
+#'  "2023-01-02")), P1_B_BCap_Blos_BArr = c(3.790697, 3.047619))
+#' @param visits_based_output Dataframe with results from visit-based simulation
 #'
 #' @importFrom tidyr pivot_wider
 #' @importFrom magrittr %>%
 #' @importFrom dplyr select
 #' @importFrom utils write.csv
 #'
-#' @return saves csv to specified location
+#' @return Saves csv to specified location
 #' @export
 save_visit <- function(visit_filename,
                        arr_rates_visit = parent.frame()$arr_rates_visit,
-                       outcomes = parent.frame()$outcomes,
                        visits_based_output = parent.frame()$visits_based_output) {
   # Specify outcomes of interest
   outcomes <- c("niq", "occ", "wait", "cost")

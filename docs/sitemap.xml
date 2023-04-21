@@ -67,6 +67,9 @@
     <loc>/reference/save_visit.html</loc>
   </url>
   <url>
+    <loc>/reference/save_visit_stoch.html</loc>
+  </url>
+  <url>
     <loc>/reference/sim_setup.html</loc>
   </url>
 </urlset>

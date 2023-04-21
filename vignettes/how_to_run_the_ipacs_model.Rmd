@@ -24,20 +24,28 @@ Set value for objects that you may wish to change. In this example, `system.file
 ``` {r set_param}
 # String with file path for excel sheet with model inputs
 input_filename <- system.file("extdata", "IPACS_20230214_fix.xlsx", package="ipacs")
+
 # Path to save output files to
 visit_filename <- "../inst/extdata/visit_output_using_IPACS_20230214_fix.csv"
+visit_stoch_filename <- "../inst/extdata/stochastic_visit_output_using_IPACS_20230214_fix.csv"
+
 # Method for estimation of mu and sigma (for calculate_mu_sigma())
 est_method <- 1
+
 # Standard deviation for length of stay
 sd_los <- 3
+
 # Number of runs for each simulation
-nruns <- as.integer(5)
-# Standard deviation for initial service/visit rate (ISR/IVR)
+nruns <- 5
+
+# Standard deviation for initial service/visit rate (ISR/IVR) and end service
+# rate/final visit rate (ESR/FVR)
 sd_isr <- 0.5
-# Standard deviation for end service rate/final visit rate (ESR/FVR)
 sd_esr <- 0.5
+
 # Temporary seed
 temp_seed <- 1
+
 # Warmup length
 warmup <- 0
 ```
@@ -45,6 +53,10 @@ warmup <- 0
 Use [`import_file`](https://amyheather.github.io/ipacs/reference/import_file.html) to import sheets from file containing model parameters. This will produce 5 dataframes: "arrivals_all", "init_conds", "capacity", "losA" and "costs". As R cannot return multiple objects, we return a list of dataframes and a list of dataframe names, then use assign to create those in our current environment.
 ```{r import}
 files <- import_file(input_filename)
+
+print("List of objects created...")
+print(files[[1]])
+
 for (x in seq_along(files[[1]])){
   assign(files[[1]][x], files[[2]][[x]])
 }
@@ -62,32 +74,31 @@ arr_scenarios <- create_scenarios(scenarios=FALSE)
 ```
 
 ### Visit-based simulation (P1)
-Use [`sim_setup`](https://amyheather.github.io/ipacs/reference/sim_setup.html) to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
+**Set-up:** Use [`sim_setup`](https://amyheather.github.io/ipacs/reference/sim_setup.html) to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
 ``` {r setup_visit}
 setup_visit <- sim_setup("visit")
+
+print("List of objects created...")
+print(setup_visit[[1]])
+
 for (i in seq_along(setup_visit[[1]])){
   assign(setup_visit[[1]][i], setup_visit[[2]][[i]])
 }
+print("List of locations and scenarios...")
+print(pathway_vector_visit)
 ```
 
-Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
+**Run simulation:** Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
 ``` {r run_visit}
 visit_sim_result <- run_visit_sim()
 visits_based_output <- visit_sim_result[[1]]
 visits_based_output_q <- visit_sim_result[[2]]
 ```
 
-Use `save_visit()` to extract results for each date for number in queue, occupancy, wait and costs and then save to csv.
+**Save results:** Use [`save_visit()`](https://amyheather.github.io/ipacs/reference/save_visit.html) extract results for each date for number in queue, occupancy, wait and costs and then save to csv. Use [`save_visit_stoch()`](https://amyheather.github.io/ipacs/reference/save_visit_stoch.html) to correct date formatting and then save the quantiles to csv for optional stochastic report, saving in long format for plotting.
 ``` {r output_visit}
 save_visit(visit_filename)
-```
-
-Correct date formatting, and save the quantiles to csv for optional stochastic report. Saved in long format for plotting
-``` {r stoch_visit}
-# AS ABOVE
-visits_based_output_q$date <- as.Date(visits_based_output_q$date)
-visit_stoch_filename <- "../inst/extdata/stochastic_visit_output_using_IPACS_20230214_fix.csv"
-write.csv(visits_based_output_q, visit_stoch_filename, row.names = FALSE)
+save_visit_stoch(visit_stoch_filename)
 ```
 
 ### Testing
@@ -95,5 +106,5 @@ Checks that output from simulations matchs outputs from IPACS_MODEL repository.
 ``` {r visit_test}
 test_visit <- read.csv("../inst/extdata/visit_testing_using_IPACS_20230214_fix.csv")
 new_visit <- read.csv("../inst/extdata/visit_output_using_IPACS_20230214_fix.csv")
-diffdf::diffdf(new_visit, test_visit)
+print(diffdf::diffdf(new_visit, test_visit))
 ```
