@@ -93,29 +93,29 @@ n_slots  <- cap_visit * mean(c(isr, end_sr))
 
 Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
 ``` {r run_visit}
-# visit_sim_result <- run_visit_sim()
-# visits_based_output <- visit_sim_result[[1]]
-# visits_based_output_q <- visit_sim_result[[2]]
+visit_sim_result <- run_visit_sim()
+visits_based_output <- visit_sim_result[[1]]
+visits_based_output_q <- visit_sim_result[[2]]
 ```
 
 Use `save_visit()` to extract results for each date for number in queue, occupancy, wait and costs and then save to csv.
 ``` {r output_visit}
-# save_visit(visit_filename)
+save_visit(visit_filename)
 ```
 
 Correct date formatting, and save the quantiles to csv for optional stochastic report. Saved in long format for plotting
 ``` {r stoch_visit}
 # AS ABOVE
-# visits_based_output_q$date <- as.Date(visits_based_output_q$date)
-# visit_stoch_filename <- "../inst/extdata/stochastic_visit_output_using_IPACS_20230214_fix.csv"
-# write.csv(visits_based_output_q, visit_stoch_filename, row.names = FALSE)
+visits_based_output_q$date <- as.Date(visits_based_output_q$date)
+visit_stoch_filename <- "../inst/extdata/stochastic_visit_output_using_IPACS_20230214_fix.csv"
+write.csv(visits_based_output_q, visit_stoch_filename, row.names = FALSE)
 ```
 
 ### Testing
 Checks that output from simulations matchs outputs from IPACS_MODEL repository.
 ``` {r visit_test}
-# library(diffdf)
-# test_visit <- read.csv("../inst/extdata/visit_testing_using_IPACS_20230214_fix.csv")
-# new_visit <- read.csv("../inst/extdata/visit_output_using_IPACS_20230214_fix.csv")
-# diffdf(new_visit, test_visit)
+library(diffdf)
+test_visit <- read.csv("../inst/extdata/visit_testing_using_IPACS_20230214_fix.csv")
+new_visit <- read.csv("../inst/extdata/visit_output_using_IPACS_20230214_fix.csv")
+diffdf(new_visit, test_visit)
 ```

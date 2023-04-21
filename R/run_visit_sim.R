@@ -53,6 +53,10 @@ run_visit_sim <- function(
     # Inputs for dis_end_slots() (plus end_sr above)
     sd_esr = parent.frame()$sd_esr){
 
+  # Create objects to store outputs from each scenario
+  visits_based_output <- NULL
+  visits_based_output_q <- NULL
+
   # Repeat for each scenario in visit-based pathways
   for (z in seq_along(pathway_vector_visit)) {
     # detectCores() but -1 as want to make you you have one left to do other
