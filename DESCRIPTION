@@ -15,8 +15,6 @@ Imports:
     stringr,
     stats,
     utils,
-    parallel,
-    doSNOW,
     foreach
 License: MIT + file LICENSE
 Encoding: UTF-8
