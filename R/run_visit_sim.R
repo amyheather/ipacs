@@ -68,16 +68,14 @@ run_visit_sim <- function(
 
     # Not used, but a temporary fix to allow foreach to access objects, as
     # when they weren't used, it couldn't seem to find them
-    objects <- list(pathway_vector_visit, nruns, temp_seed, sim_length, warmup,
-                    n_slots, init_occ_visit, init_niq_visit, arr_rates_visit,
-                    isr, end_sr, mean_los_visit, costs_visit, srv_dist_visit,
-                    srv_params_visit, sd_los_visit, sd_isr, sd_esr)
+    # objects <- list(pathway_vector_visit, nruns, temp_seed, sim_length, warmup,
+    #                 n_slots, init_occ_visit, init_niq_visit, arr_rates_visit,
+    #                 isr, end_sr, mean_los_visit, costs_visit, srv_dist_visit,
+    #                 srv_params_visit, sd_los_visit, sd_isr, sd_esr)
 
     # Use foreach() to repeat operation for each run
     results <- foreach(run = 1:nruns, .combine = "rbind",
-                       .export=c("pathway_vector_visit", "nruns", "temp_seed", "sim_length", "warmup",
-                                 "n_slots", "init_occ_visit", "init_niq_visit", "arr_rates_visit",
-                                 "isr", "end_sr", "mean_los_visit", "costs_visit", "srv_dist_visit",
+                       .export=c("mean_los_visit", "costs_visit", "srv_dist_visit",
                                  "srv_params_visit", "sd_los_visit", "sd_isr", "sd_esr"),
                        .packages=c("parallel", "doSNOW", "foreach", "ipacs",
                                    "stats", "dplyr", "stringr", "magrittr")) %dopar% {

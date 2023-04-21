@@ -93,7 +93,12 @@ n_slots  <- cap_visit * mean(c(isr, end_sr))
 
 Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
 ``` {r run_visit}
+visit_start_time <- Sys.time()
 visit_sim_result <- run_visit_sim()
+visit_end_time <- Sys.time()
+time_taken <- visit_end_time - visit_start_time
+print(time_taken)
+
 visits_based_output <- visit_sim_result[[1]]
 visits_based_output_q <- visit_sim_result[[2]]
 ```
