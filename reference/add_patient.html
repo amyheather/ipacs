@@ -60,7 +60,18 @@
 <span>  npat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">npat</span>,</span>
 <span>  req_visits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">req_visits</span>,</span>
 <span>  patients <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">patients</span>,</span>
-<span>  resources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">resources</span></span>
+<span>  resources <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">resources</span>,</span>
+<span>  t <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">t</span>,</span>
+<span>  z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">z</span>,</span>
+<span>  srv_dist_visit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">srv_dist_visit</span>,</span>
+<span>  srv_params_visit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">srv_params_visit</span>,</span>
+<span>  mean_los_visit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">mean_los_visit</span>,</span>
+<span>  sd_los_visit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">sd_los_visit</span>,</span>
+<span>  isr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">isr</span>,</span>
+<span>  sd_isr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">sd_isr</span>,</span>
+<span>  n_slots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">n_slots</span>,</span>
+<span>  end_sr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">end_sr</span>,</span>
+<span>  sd_esr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sys.parent.html" class="external-link">parent.frame</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">sd_esr</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -89,6 +100,54 @@ system? If so, will produce adjusted length of stay and visit rates.</p></dd>
 
 <dt>resources</dt>
 <dd><p>dataframe - to capture information on available resources</p></dd>
+
+
+<dt>t</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>z</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>srv_dist_visit</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>srv_params_visit</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>mean_los_visit</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>sd_los_visit</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>isr</dt>
+<dd><p>Integer vector - initial service rate (ISR) or initial visit
+rate (IVR) - used in estimation of initial number of visits required for
+each patient, e.g. c(4, 4)</p></dd>
+
+
+<dt>sd_isr</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>n_slots</dt>
+<dd><p>tbc</p></dd>
+
+
+<dt>end_sr</dt>
+<dd><p>Integer vector - end service rate (end_sr) or final visit rate
+(FVR) - used in estimation of final number of visits required for
+each patient, e.g. c(1, 1)</p></dd>
+
+
+<dt>sd_esr</dt>
+<dd><p>tbc</p></dd>
 
 </dl></div>
     <div class="section level2">

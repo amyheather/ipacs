@@ -93,6 +93,8 @@ desired file - e.g. `import_file(“myfile.xlsx”).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># String with file path for excel sheet with model inputs</span></span>
 <span><span class="va">input_filename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"IPACS_20230214_fix.xlsx"</span>, package<span class="op">=</span><span class="st">"ipacs"</span><span class="op">)</span></span>
+<span><span class="co"># Path to save output files to</span></span>
+<span><span class="va">visit_filename</span> <span class="op">&lt;-</span> <span class="st">"../inst/extdata/visit_output_using_IPACS_20230214_fix.csv"</span></span>
 <span><span class="co"># Method for estimation of mu and sigma (for calculate_mu_sigma())</span></span>
 <span><span class="va">est_method</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="co"># Standard deviation for length of stay</span></span>
@@ -107,36 +109,35 @@ desired file - e.g. `import_file(“myfile.xlsx”).</p>
 <span><span class="va">temp_seed</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="co"># Warmup length</span></span>
 <span><span class="va">warmup</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></code></pre></div>
-<p>Use <code>import_file</code> to import sheets from file containing
-model parameters. This will produce 5 dataframes: “arrivals_all”,
-“init_conds”, “capacity”, “losA” and “costs”. As R cannot return
-multiple objects, we return a list of dataframes and a list of dataframe
-names, then use assign to create those in our current environment.</p>
+<p>Use <a href="https://amyheather.github.io/ipacs/reference/import_file.html" class="external-link"><code>import_file</code></a>
+to import sheets from file containing model parameters. This will
+produce 5 dataframes: “arrivals_all”, “init_conds”, “capacity”, “losA”
+and “costs”. As R cannot return multiple objects, we return a list of
+dataframes and a list of dataframe names, then use assign to create
+those in our current environment.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_file.html">import_file</a></span><span class="op">(</span><span class="va">input_filename</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">x</span><span class="op">]</span>, <span class="va">files</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Use <code>calculate_mu_sigma</code> to recalculate mu and sigma in
-losA dataframe using your chosen method and sd_los (if applicable).</p>
+<p>Use <a href="https://amyheather.github.io/ipacs/reference/calculate_mu_sigma.html" class="external-link"><code>calculate_mu_sigma</code></a>
+to recalculate mu and sigma in losA dataframe using your chosen method
+and sd_los (if applicable).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">losA</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calculate_mu_sigma.html">calculate_mu_sigma</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Set simulation length to the number of unique dates in arrivals.</p>
+<p>Use <a href="https://amyheather.github.io/ipacs/reference/create_scenarios.html" class="external-link"><code>create_scenarios</code></a>
+to create scenarios and arr_scenarios.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sim_length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">arrivals_all</span><span class="op">$</span><span class="va">date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Use <code>create_scenarios</code> to create scenarios and
-arr_scenarios.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_scenarios.html">create_scenarios</a></span><span class="op">(</span>scenarios<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">arr_scenarios</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_scenarios.html">create_scenarios</a></span><span class="op">(</span>scenarios<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="visit-based-simulation-p1">Visit-based simulation (P1)<a class="anchor" aria-label="anchor" href="#visit-based-simulation-p1"></a>
 </h3>
-<p>Use <code>sim_setup</code> to create objects for visit-based
-simulation. These are returned in a list, so use assign to extract and
-add to environment.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Use <a href="https://amyheather.github.io/ipacs/reference/sim_setup.html" class="external-link"><code>sim_setup</code></a>
+to create objects for visit-based simulation. These are returned in a
+list, so use assign to extract and add to environment.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">setup_visit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_setup.html">sim_setup</a></span><span class="op">(</span><span class="st">"visit"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; c("P1_B_BCap_Blos_BArr", "P1_B_BCap_S1los_BArr", "P1_B_BCap_S2los_BArr", </span></span>
 <span><span class="co">#&gt; "P1_B_S1Cap_Blos_BArr", "P1_B_S1Cap_S1los_BArr", "P1_B_S1Cap_S2los_BArr", </span></span>
@@ -154,23 +155,43 @@ add to environment.</p>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">setup_visit</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Create objects with initial service rate (ISR), end service rate
-(ESR), and their standard deviations (SD). The SD objects are lists that
-repeat the SD for the number of visit scenarios.</p>
+<p>Use <a href="https://amyheather.github.io/ipacs/reference/run_visit_sim.html" class="external-link"><code>run_visit_sim</code></a>
+to run the visit-based simulation. Extract the results (as returned as
+list).</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">visit_sim_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_visit_sim.html">run_visit_sim</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="va">visits_based_output</span> <span class="op">&lt;-</span> <span class="va">visit_sim_result</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">visits_based_output_q</span> <span class="op">&lt;-</span> <span class="va">visit_sim_result</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<p>Use <code><a href="../reference/save_visit.html">save_visit()</a></code> to extract results for each date for
+number in queue, occupancy, wait and costs and then save to csv.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">isr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">$</span><span class="va">IVR</span><span class="op">)</span></span>
-<span><span class="va">end_sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">$</span><span class="va">FVR</span><span class="op">)</span></span>
-<span><span class="va">sd_isr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">sd_isr</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">sd_esr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html" class="external-link">as.double</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">sd_esr</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">scenarios_visit</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Create n_slots, the number of visit slots available per day. This is
-based on an average visit rate (as from mean of isr and end_sr)
-multiplied by the capacity for P1 (cap_visit)</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/save_visit.html">save_visit</a></span><span class="op">(</span><span class="va">visit_filename</span><span class="op">)</span></span></code></pre></div>
+<p>Correct date formatting, and save the quantiles to csv for optional
+stochastic report. Saved in long format for plotting</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">n_slots</span>  <span class="op">&lt;-</span> <span class="va">cap_visit</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">isr</span>, <span class="va">end_sr</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Create object to store outputs from each scenario</p>
+<code class="sourceCode R"><span><span class="co"># AS ABOVE</span></span>
+<span><span class="va">visits_based_output_q</span><span class="op">$</span><span class="va">date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">visits_based_output_q</span><span class="op">$</span><span class="va">date</span><span class="op">)</span></span>
+<span><span class="va">visit_stoch_filename</span> <span class="op">&lt;-</span> <span class="st">"../inst/extdata/stochastic_visit_output_using_IPACS_20230214_fix.csv"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">visits_based_output_q</span>, <span class="va">visit_stoch_filename</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="testing">Testing<a class="anchor" aria-label="anchor" href="#testing"></a>
+</h3>
+<p>Checks that output from simulations matchs outputs from IPACS_MODEL
+repository.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">visits_based_output</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span><span class="va">visits_based_output_q</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">test_visit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"../inst/extdata/visit_testing_using_IPACS_20230214_fix.csv"</span><span class="op">)</span></span>
+<span><span class="va">new_visit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"../inst/extdata/visit_output_using_IPACS_20230214_fix.csv"</span><span class="op">)</span></span>
+<span><span class="fu">diffdf</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/diffdf/man/diffdf.html" class="external-link">diffdf</a></span><span class="op">(</span><span class="va">new_visit</span>, <span class="va">test_visit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; No issues were found!</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
