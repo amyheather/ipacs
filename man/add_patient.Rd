@@ -50,13 +50,17 @@ system? If so, will produce adjusted length of stay and visit rates.}
 
 \item{sd_los_visit}{tbc}
 
-\item{isr}{tbc}
+\item{isr}{Integer vector - initial service rate (ISR) or initial visit
+rate (IVR) - used in estimation of initial number of visits required for
+each patient, e.g. c(4, 4)}
 
 \item{sd_isr}{tbc}
 
 \item{n_slots}{tbc}
 
-\item{end_sr}{tbc}
+\item{end_sr}{Integer vector - end service rate (end_sr) or final visit rate
+(FVR) - used in estimation of final number of visits required for
+each patient, e.g. c(1, 1)}
 
 \item{sd_esr}{tbc}
 }

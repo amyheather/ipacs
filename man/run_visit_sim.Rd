@@ -10,14 +10,13 @@ run_visit_sim(
   temp_seed = parent.frame()$temp_seed,
   sim_length = parent.frame()$sim_length,
   warmup = parent.frame()$warmup,
-  n_slots = parent.frame()$n_slots,
   init_occ_visit = parent.frame()$init_occ_visit,
   init_niq_visit = parent.frame()$init_niq_visit,
   arr_rates_visit = parent.frame()$arr_rates_visit,
-  isr = parent.frame()$isr,
-  end_sr = parent.frame()$end_sr,
   mean_los_visit = parent.frame()$mean_los_visit,
   costs_visit = parent.frame()$costs_visit,
+  cap_visit = parent.frame()$cap_visit,
+  scenarios_visit = parent.frame()$scenarios_visit,
   srv_dist_visit = parent.frame()$srv_dist_visit,
   srv_params_visit = parent.frame()$srv_params_visit,
   sd_los_visit = parent.frame()$sd_los_visit,
@@ -26,45 +25,74 @@ run_visit_sim(
 )
 }
 \arguments{
-\item{pathway_vector_visit}{tbc}
+\item{pathway_vector_visit}{Character vector with list of scenarios, e.g.
+c("P1_B_BCap_Blos_BArr", "P1_B_BCap_S1los_BArr")}
 
-\item{nruns}{tbc}
+\item{nruns}{Integer - number of times to run simulation for each scenario,
+e.g. 5}
 
-\item{temp_seed}{tbc}
+\item{temp_seed}{Integer - temporary seed value, used to calculate seed for
+simulation, e.g. 1}
 
-\item{sim_length}{tbc}
+\item{sim_length}{Integer - length of simulation, e.g. 181}
 
-\item{warmup}{tbc}
+\item{warmup}{Integer - length of warmup, e.g. 0}
 
-\item{n_slots}{tbc}
+\item{init_occ_visit}{List of integers - each integer is the initial number
+of patients occupying the pathway when the simulation starts, e.g.
+list(71, 71)}
 
-\item{init_occ_visit}{tbc}
+\item{init_niq_visit}{List of integers - each integer is the initial number
+of patients waiting in a queue to enter the pathway when the simulation
+starts, e.g. list(42, 42)}
 
-\item{init_niq_visit}{tbc}
+\item{arr_rates_visit}{Dataframe - first column is date, subsequent columns
+are each scenario, with elements of dataframe being the arrival rate for
+each scenario and date, e.g. data.frame(date = as.Date(c("2023-01-01",
+"2023-01-02")), P1_B_BCap_Blos_BArr = c(3.790697, 3.047619))}
 
-\item{arr_rates_visit}{tbc}
+\item{mean_los_visit}{List of floats - each float is the mean of the normal
+length of stay distribution, e.g. list(12.08, 10)}
 
-\item{isr}{tbc}
+\item{costs_visit}{Dataframe - with community cost and acute cost for each
+location, e.g. data.frame(node = c("P1_B"), community_cost = c(125),
+acute_dtoc = c(346))}
 
-\item{end_sr}{tbc}
+\item{cap_visit}{Integer vector - each integer is the capacity, length is
+same as number of scenarios/locations, e.g. c(92, 2000)}
 
-\item{mean_los_visit}{tbc}
+\item{scenarios_visit}{Dataframe with scenarios for visit-based simulation}
 
-\item{costs_visit}{tbc}
+\item{srv_dist_visit}{List with distribution for length of stay, e.g.
+list("lnorm", "lnorm")}
 
-\item{srv_dist_visit}{tbc}
+\item{srv_params_visit}{List containing mean and SD for the lnorm length of
+stay distribution, e.g. list(c(1.52, 1.32), c(1.60, 1.33))}
 
-\item{srv_params_visit}{tbc}
+\item{sd_los_visit}{List with the standard deviation of the normal
+length of stay distribution, e.g. list(3, 3)}
 
-\item{sd_los_visit}{tbc}
+\item{sd_isr}{Float - standard deviation for initial service rate
+distribution, e.g. 0.5}
 
-\item{sd_isr}{tbc}
-
-\item{sd_esr}{tbc}
+\item{sd_esr}{Float - standard deviation for end service rate distribution,
+e.g. c(0.5, 0.5)}
 }
 \value{
 List containing visits_based_output and visits_based_output_q
+\itemize{
+\item visits_based_output - dataframe with simulation results
+\item visits_based_output_q - dataframe with stochastic results
+}
 }
 \description{
-Run visit-based simulation
+\code{run_visit_sim()} runs the visit-based simulation, returning standard
+and stochastic outputs.
+}
+\examples{
+# Function defaults to import objects of the same name of each param from
+# the current environment, so can run without specifying any inputs
+\dontrun{
+run_visit_sim()
+}
 }

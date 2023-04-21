@@ -55,12 +55,6 @@ Use [`calculate_mu_sigma`](https://amyheather.github.io/ipacs/reference/calculat
 losA <- calculate_mu_sigma()
 ```
 
-Set simulation length to the number of unique dates in arrivals.
-``` {r sim_length}
-# IF ONLY USED BY VISIT BASED THEN MOVE IT THERE
-sim_length <- as.integer(length(unique(arrivals_all$date)))
-```
-
 Use [`create_scenarios`](https://amyheather.github.io/ipacs/reference/create_scenarios.html) to create scenarios and arr_scenarios.
 ``` {r scenarios}
 scenarios <- create_scenarios(scenarios=TRUE)
@@ -68,7 +62,7 @@ arr_scenarios <- create_scenarios(scenarios=FALSE)
 ```
 
 ### Visit-based simulation (P1)
-Use[ [`sim_setup`](https://amyheather.github.io/ipacs/reference/sim_setup.html) to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
+Use [`sim_setup`](https://amyheather.github.io/ipacs/reference/sim_setup.html) to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
 ``` {r setup_visit}
 setup_visit <- sim_setup("visit")
 for (i in seq_along(setup_visit[[1]])){
@@ -76,29 +70,9 @@ for (i in seq_along(setup_visit[[1]])){
 }
 ```
 
-Create objects with initial service rate (ISR), end service rate (ESR), and their standard deviations (SD). The SD objects are lists that repeat the SD for the number of visit scenarios.
-``` {r isr_esr}
-# IF ONLY USED BY VISIT, CHANGE TO CREATE IN FUNCTION
-isr <- as.integer(scenarios_visit$IVR)
-end_sr <- as.integer(scenarios_visit$FVR)
-sd_isr <- as.double(rep(sd_isr, nrow(scenarios_visit)))
-sd_esr <- as.double(rep(sd_esr, nrow(scenarios_visit)))
-```
-
-Create n_slots, the number of visit slots available per day. This is based on an average visit rate (as from mean of isr and end_sr) multiplied by the capacity for P1 (cap_visit)
-``` {r n_slots}
-# IF ONLY USED BY VISIT, CHANGE TO CREATE IN FUNCTION
-n_slots  <- cap_visit * mean(c(isr, end_sr))
-```
-
 Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
 ``` {r run_visit}
-visit_start_time <- Sys.time()
 visit_sim_result <- run_visit_sim()
-visit_end_time <- Sys.time()
-time_taken <- visit_end_time - visit_start_time
-print(time_taken)
-
 visits_based_output <- visit_sim_result[[1]]
 visits_based_output_q <- visit_sim_result[[2]]
 ```
@@ -119,8 +93,7 @@ write.csv(visits_based_output_q, visit_stoch_filename, row.names = FALSE)
 ### Testing
 Checks that output from simulations matchs outputs from IPACS_MODEL repository.
 ``` {r visit_test}
-library(diffdf)
 test_visit <- read.csv("../inst/extdata/visit_testing_using_IPACS_20230214_fix.csv")
 new_visit <- read.csv("../inst/extdata/visit_output_using_IPACS_20230214_fix.csv")
-diffdf(new_visit, test_visit)
+diffdf::diffdf(new_visit, test_visit)
 ```

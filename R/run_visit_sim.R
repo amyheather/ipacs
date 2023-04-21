@@ -1,23 +1,44 @@
 #' Run visit-based simulation
 #'
-#' @param pathway_vector_visit tbc
-#' @param nruns tbc
-#' @param temp_seed tbc
-#' @param sim_length tbc
-#' @param warmup tbc
-#' @param n_slots tbc
-#' @param init_occ_visit tbc
-#' @param init_niq_visit tbc
-#' @param arr_rates_visit tbc
-#' @param isr tbc
-#' @param end_sr tbc
-#' @param mean_los_visit tbc
-#' @param costs_visit tbc
-#' @param srv_dist_visit tbc
-#' @param srv_params_visit tbc
-#' @param sd_los_visit tbc
-#' @param sd_isr tbc
-#' @param sd_esr tbc
+#' `run_visit_sim()` runs the visit-based simulation, returning standard
+#' and stochastic outputs.
+#'
+#' @param pathway_vector_visit Character vector with list of scenarios, e.g.
+#'  c("P1_B_BCap_Blos_BArr", "P1_B_BCap_S1los_BArr")
+#' @param nruns Integer - number of times to run simulation for each scenario,
+#'  e.g. 5
+#' @param temp_seed Integer - temporary seed value, used to calculate seed for
+#'  simulation, e.g. 1
+#' @param sim_length Integer - length of simulation, e.g. 181
+#' @param warmup Integer - length of warmup, e.g. 0
+#' @param init_occ_visit List of integers - each integer is the initial number
+#'  of patients occupying the pathway when the simulation starts, e.g.
+#'  list(71, 71)
+#' @param init_niq_visit List of integers - each integer is the initial number
+#'  of patients waiting in a queue to enter the pathway when the simulation
+#'  starts, e.g. list(42, 42)
+#' @param arr_rates_visit Dataframe - first column is date, subsequent columns
+#'  are each scenario, with elements of dataframe being the arrival rate for
+#'  each scenario and date, e.g. data.frame(date = as.Date(c("2023-01-01",
+#'  "2023-01-02")), P1_B_BCap_Blos_BArr = c(3.790697, 3.047619))
+#' @param mean_los_visit List of floats - each float is the mean of the normal
+#'  length of stay distribution, e.g. list(12.08, 10)
+#' @param costs_visit Dataframe - with community cost and acute cost for each
+#'  location, e.g. data.frame(node = c("P1_B"), community_cost = c(125),
+#'  acute_dtoc = c(346))
+#' @param cap_visit Integer vector - each integer is the capacity, length is
+#'  same as number of scenarios/locations, e.g. c(92, 2000)
+#' @param scenarios_visit Dataframe with scenarios for visit-based simulation
+#' @param srv_dist_visit List with distribution for length of stay, e.g.
+#'  list("lnorm", "lnorm")
+#' @param srv_params_visit List containing mean and SD for the lnorm length of
+#'  stay distribution, e.g. list(c(1.52, 1.32), c(1.60, 1.33))
+#' @param sd_los_visit List with the standard deviation of the normal
+#'  length of stay distribution, e.g. list(3, 3)
+#' @param sd_isr Float - standard deviation for initial service rate
+#'  distribution, e.g. 0.5
+#' @param sd_esr Float - standard deviation for end service rate distribution,
+#'  e.g. c(0.5, 0.5)
 #'
 #' @importFrom foreach foreach %do%
 #' @importFrom stats rpois quantile
@@ -26,7 +47,16 @@
 #' @importFrom magrittr %>%
 #'
 #' @return List containing visits_based_output and visits_based_output_q
+#'  * visits_based_output - dataframe with simulation results
+#'  * visits_based_output_q - dataframe with stochastic results
 #' @export
+#'
+#' @examples
+#' # Function defaults to import objects of the same name of each param from
+#' # the current environment, so can run without specifying any inputs
+#' \dontrun{
+#' run_visit_sim()
+#' }
 run_visit_sim <- function(
     # For this function
     pathway_vector_visit = parent.frame()$pathway_vector_visit,
@@ -34,22 +64,37 @@ run_visit_sim <- function(
     temp_seed = parent.frame()$temp_seed,
     sim_length = parent.frame()$sim_length,
     warmup = parent.frame()$warmup,
-    n_slots = parent.frame()$n_slots,
     init_occ_visit = parent.frame()$init_occ_visit,
     init_niq_visit = parent.frame()$init_niq_visit,
     arr_rates_visit = parent.frame()$arr_rates_visit,
-    isr = parent.frame()$isr,
-    end_sr = parent.frame()$end_sr,
     mean_los_visit = parent.frame()$mean_los_visit,
     costs_visit = parent.frame()$costs_visit,
+    cap_visit = parent.frame()$cap_visit,
+    scenarios_visit = parent.frame()$scenarios_visit,
     # Inputs for dis_los() (plus mean_los_visit above)
     srv_dist_visit = parent.frame()$srv_dist_visit,
     srv_params_visit = parent.frame()$srv_params_visit,
     sd_los_visit = parent.frame()$sd_los_visit,
-    # Inputs for dis_init_slots() (plus isr + n_slots above)
+    # Inputs for dis_init_slots() (plus isr above)
     sd_isr = parent.frame()$sd_isr,
     # Inputs for dis_end_slots() (plus end_sr above)
     sd_esr = parent.frame()$sd_esr){
+
+  # Create objects with initial service rate (ISR), end service rate (ESR), and
+  # their standard deviations (SD). The SD objects are lists that repeat the SD
+  # for the number of visit scenarios.
+  isr <- as.integer(scenarios_visit$IVR)
+  end_sr <- as.integer(scenarios_visit$FVR)
+  sd_isr <- as.double(rep(sd_isr, nrow(scenarios_visit)))
+  sd_esr <- as.double(rep(sd_esr, nrow(scenarios_visit)))
+
+  # Create n_slots, the number of visit slots available per day.
+  # This is based on an average visit rate (as from mean of isr and end_sr)
+  # multiplied by the capacity for P1 (cap_visit)
+  n_slots  <- cap_visit * mean(c(isr, end_sr))
+
+  # Set simulation length to the number of unique dates for arrivals
+  sim_length <- nrow(arr_rates_visit)
 
   # Create objects to store outputs from each scenario
   visits_based_output <- NULL
@@ -67,8 +112,8 @@ run_visit_sim <- function(
 
     # Use foreach() to repeat operation for each run
     results <- foreach(run = 1:nruns, .combine = "rbind",
-                       .packages=c("parallel", "doSNOW", "foreach", "ipacs",
-                                   "stats", "dplyr", "stringr", "magrittr")) %do% {
+                       .packages=c("foreach", "ipacs", "stats", "dplyr",
+                                   "stringr", "magrittr")) %do% {
       # Set seed
       set.seed(nruns * (temp_seed - 1) + run)
 

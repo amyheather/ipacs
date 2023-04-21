@@ -20,10 +20,14 @@
 #' @param srv_params_visit tbc
 #' @param mean_los_visit tbc
 #' @param sd_los_visit tbc
-#' @param isr tbc
+#' @param isr Integer vector - initial service rate (ISR) or initial visit
+#'  rate (IVR) - used in estimation of initial number of visits required for
+#'  each patient, e.g. c(4, 4)
 #' @param sd_isr tbc
 #' @param n_slots tbc
-#' @param end_sr tbc
+#' @param end_sr Integer vector - end service rate (end_sr) or final visit rate
+#'  (FVR) - used in estimation of final number of visits required for
+#'  each patient, e.g. c(1, 1)
 #' @param sd_esr tbc
 #'
 #' @importFrom utils tail
