@@ -125,12 +125,6 @@ dataframes and a list of dataframe names, then use assign to create
 those in our current environment.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/import_file.html">import_file</a></span><span class="op">(</span><span class="va">input_filename</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"List of objects created..."</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "List of objects created..."</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "arrivals_all" "init_conds"   "capacity"     "losA"         "costs"</span></span>
-<span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">files</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">x</span><span class="op">]</span>, <span class="va">files</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">x</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -153,52 +147,14 @@ to create objects for visit-based simulation. These are returned in a
 list, so use assign to extract and add to environment.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">setup_visit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim_setup.html">sim_setup</a></span><span class="op">(</span><span class="st">"visit"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"List of objects created..."</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "List of objects created..."</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "scenarios_visit"      "costs_visit"          "init_occ_visit"      </span></span>
-<span><span class="co">#&gt;  [4] "init_niq_visit"       "srv_dist_visit"       "cap_visit"           </span></span>
-<span><span class="co">#&gt;  [7] "loss_visit"           "srv_params_visit"     "mean_los_visit"      </span></span>
-<span><span class="co">#&gt; [10] "sd_los_visit"         "arr_rates_visit"      "pathway_vector_visit"</span></span>
-<span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign</a></span><span class="op">(</span><span class="va">setup_visit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="va">setup_visit</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"List of locations and scenarios..."</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "List of locations and scenarios..."</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">pathway_vector_visit</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "P1_B_BCap_Blos_BArr"     "P1_B_BCap_S1los_BArr"   </span></span>
-<span><span class="co">#&gt;  [3] "P1_B_BCap_S2los_BArr"    "P1_B_S1Cap_Blos_BArr"   </span></span>
-<span><span class="co">#&gt;  [5] "P1_B_S1Cap_S1los_BArr"   "P1_B_S1Cap_S2los_BArr"  </span></span>
-<span><span class="co">#&gt;  [7] "P1_B_BCap_Blos_S1Arr"    "P1_B_BCap_S1los_S1Arr"  </span></span>
-<span><span class="co">#&gt;  [9] "P1_B_BCap_S2los_S1Arr"   "P1_B_S1Cap_Blos_S1Arr"  </span></span>
-<span><span class="co">#&gt; [11] "P1_B_S1Cap_S1los_S1Arr"  "P1_B_S1Cap_S2los_S1Arr" </span></span>
-<span><span class="co">#&gt; [13] "P1_NS_BCap_Blos_BArr"    "P1_NS_BCap_S1los_BArr"  </span></span>
-<span><span class="co">#&gt; [15] "P1_NS_BCap_S2los_BArr"   "P1_NS_S1Cap_Blos_BArr"  </span></span>
-<span><span class="co">#&gt; [17] "P1_NS_S1Cap_S1los_BArr"  "P1_NS_S1Cap_S2los_BArr" </span></span>
-<span><span class="co">#&gt; [19] "P1_NS_BCap_Blos_S1Arr"   "P1_NS_BCap_S1los_S1Arr" </span></span>
-<span><span class="co">#&gt; [21] "P1_NS_BCap_S2los_S1Arr"  "P1_NS_S1Cap_Blos_S1Arr" </span></span>
-<span><span class="co">#&gt; [23] "P1_NS_S1Cap_S1los_S1Arr" "P1_NS_S1Cap_S2los_S1Arr"</span></span>
-<span><span class="co">#&gt; [25] "P1_SG_BCap_Blos_BArr"    "P1_SG_BCap_S1los_BArr"  </span></span>
-<span><span class="co">#&gt; [27] "P1_SG_BCap_S2los_BArr"   "P1_SG_S1Cap_Blos_BArr"  </span></span>
-<span><span class="co">#&gt; [29] "P1_SG_S1Cap_S1los_BArr"  "P1_SG_S1Cap_S2los_BArr" </span></span>
-<span><span class="co">#&gt; [31] "P1_SG_BCap_Blos_S1Arr"   "P1_SG_BCap_S1los_S1Arr" </span></span>
-<span><span class="co">#&gt; [33] "P1_SG_BCap_S2los_S1Arr"  "P1_SG_S1Cap_Blos_S1Arr" </span></span>
-<span><span class="co">#&gt; [35] "P1_SG_S1Cap_S1los_S1Arr" "P1_SG_S1Cap_S2los_S1Arr"</span></span></code></pre></div>
+<span><span class="op">}</span></span></code></pre></div>
 <p><strong>Run simulation:</strong> Use <a href="https://amyheather.github.io/ipacs/reference/run_visit_sim.html" class="external-link"><code>run_visit_sim</code></a>
 to run the visit-based simulation. Extract the results (as returned as
 list).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">visit_sim_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_visit_sim.html">run_visit_sim</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="va">visits_based_output</span> <span class="op">&lt;-</span> <span class="va">visit_sim_result</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="va">visits_based_output_q</span> <span class="op">&lt;-</span> <span class="va">visit_sim_result</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p><strong>Save results:</strong> Use <a href="https://amyheather.github.io/ipacs/reference/save_visit.html" class="external-link"><code>save_visit()</code></a>
