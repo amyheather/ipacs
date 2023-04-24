@@ -6,11 +6,16 @@
 #' that is >=0 and <= the max LOS. Uses do.call() as we need to input
 #' mean and SD for rlnorm() from a list
 #'
-#' @param z integer - scenario number
-#' @param los_dist the distribution type (e.g. "lnorm") - default is from srv_dist_visit
-#' @param los_lnorm_mean_sd the mean and SD for the lnorm distribution - default is from srv_params_visit
-#' @param los_norm_mean the mean for the other distribution type - default is from mean_los_visit
-#' @param los_norm_sd the SD for the other distribution type - default is from sd_los_visit
+#' @param z Integer - refers to the current scenario and location as the
+#'  simulation loops through pathway_vector_visit, e.g. 4
+#' @param los_dist String - the distribution type, e.g. "lnorm" - default is
+#'  from srv_dist_visit
+#' @param los_lnorm_mean_sd Float vector - the mean and SD for the lnorm
+#'  distribution, e.g. c(1.52 1.32) - default is from srv_params_visit
+#' @param los_norm_mean Float - the mean for the other distribution type, e.g.
+#'  10.23 - default is from mean_los_visit
+#' @param los_norm_sd Float - the SD for the other distribution type, e.g. 3 -
+#'  default is from sd_los_visit
 #'
 #' @importFrom stats rlnorm rnorm
 #'

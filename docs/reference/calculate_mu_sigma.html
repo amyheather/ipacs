@@ -67,27 +67,28 @@ length of stay dataframe (losA).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>est_method</dt>
-<dd><p>Integer. Indicates estimation method to use, either 1 or 2.</p></dd>
+<dd><p>Integer - indicates estimation method to use, either 1 or 2</p></dd>
 
 
 <dt>losA</dt>
-<dd><p>Dataframe.</p></dd>
+<dd><p>Dataframe - imported from excel, contains length of stay
+parameters</p></dd>
 
 
 <dt>sd_los</dt>
-<dd><p>Float. Standard deviation for length of stay distribution.</p></dd>
+<dd><p>Float - standard deviation for length of stay distribution</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>losA with new mu, sigma and los_params columns.</p>
+<p>losA dataframe with new mu, sigma and los_params columns.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># interactive()</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="va">losA</span> <span class="op">&lt;-</span> <span class="fu">calculate_mu_sigma</span><span class="op">(</span>est_method <span class="op">=</span> <span class="fl">1</span>, losA <span class="op">=</span> <span class="va">losA</span>, sd_los <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>

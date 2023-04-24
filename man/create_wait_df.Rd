@@ -7,7 +7,7 @@
 create_wait_df()
 }
 \value{
-dataframe
+Dataframe
 }
 \description{
 Create blank dataframe to store wait times for visit-based simulation

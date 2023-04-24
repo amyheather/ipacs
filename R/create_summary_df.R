@@ -2,9 +2,9 @@
 #'
 #' Create blank summary dataframe for visit-based simulation
 #'
-#' @param nrow integer - number of rows
+#' @param nrow Integer - number of rows
 #'
-#' @return dataframe
+#' @return Dataframe
 #' @export
 #'
 #' @examples

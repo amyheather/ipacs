@@ -11,14 +11,15 @@ dis_end_slots(
 )
 }
 \arguments{
-\item{z}{string - scenario}
+\item{z}{String - scenario}
 
-\item{end_sr}{float - mean for ESR distribution}
+\item{end_sr}{Float - mean for ESR distribution - default from end_sr vector}
 
-\item{sd_esr}{float - standard deviation for ESR distribution}
+\item{sd_esr}{float - standard deviation for ESR distribution - default from
+sd_esr vector}
 }
 \value{
-x integer - ESR
+x Integer - end service rate
 }
 \description{
 Sample from normal distribution to find the number of visits required on

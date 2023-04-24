@@ -7,7 +7,7 @@
 import_file(filename)
 }
 \arguments{
-\item{filename}{String.}
+\item{filename}{String - path to excel file}
 }
 \value{
 List of length 2. Contains list of dataframe names and list of
@@ -20,7 +20,7 @@ simulation. File should contain sheets "arrivals", "initial conditions",
 list of dataframe names.
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontrun{
 import_file("ipacs_model_parameters.xlsx")
-\dontshow{\}) # examplesIf}
+}
 }

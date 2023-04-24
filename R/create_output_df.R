@@ -2,9 +2,9 @@
 #'
 #' Create blank dataframe for output for visit-based simulation after warm-up
 #'
-#' @param nrow integer - number of rows
+#' @param nrow Integer - number of rows
 #'
-#' @return dataframe
+#' @return Dataframe
 #' @export
 #'
 #' @examples

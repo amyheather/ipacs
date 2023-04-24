@@ -25,44 +25,51 @@ add_patient(
 )
 }
 \arguments{
-\item{in_system}{boolean (TRUE or FALSE) - is the patient already in the
+\item{in_system}{Boolean (TRUE or FALSE) - is the patient already in the
 system? If so, will produce adjusted length of stay and visit rates.}
 
-\item{id}{integer - ID number}
+\item{id}{Integer - ID number}
 
-\item{npat}{integer - number of patients}
+\item{npat}{Integer - number of patients}
 
-\item{req_visits}{list - to store require visit vectors for each patient}
+\item{req_visits}{List to store require visit vectors for each patient}
 
-\item{patients}{dataframe - to store information about each patient (from create_patient_df())}
+\item{patients}{Dataframe to store information about each patient (from create_patient_df())}
 
-\item{resources}{dataframe - to capture information on available resources}
+\item{resources}{Dataframe to capture information on available resources}
 
-\item{t}{tbc}
+\item{t}{Integer - day of simulation, e.g. 1}
 
-\item{z}{tbc}
+\item{z}{Integer - refers to the current scenario and location as the
+simulation loops through pathway_vector_visit, e.g. 4}
 
-\item{srv_dist_visit}{tbc}
+\item{srv_dist_visit}{List with distribution for length of stay, e.g.
+list("lnorm", "lnorm")}
 
-\item{srv_params_visit}{tbc}
+\item{srv_params_visit}{List containing mean and SD for the lnorm length of
+stay distribution, e.g. list(c(1.52, 1.32), c(1.60, 1.33))}
 
-\item{mean_los_visit}{tbc}
+\item{mean_los_visit}{List of floats - each float is the mean of the normal
+length of stay distribution, e.g. list(12.08, 10)}
 
-\item{sd_los_visit}{tbc}
+\item{sd_los_visit}{List with the standard deviation of the normal
+length of stay distribution, e.g. list(3, 3)}
 
 \item{isr}{Integer vector - initial service rate (ISR) or initial visit
 rate (IVR) - used in estimation of initial number of visits required for
 each patient, e.g. c(4, 4)}
 
-\item{sd_isr}{tbc}
+\item{sd_isr}{Float vector - each float is standard deviation for initial
+service rate distribution, e.g. c(0.5, 0.5)}
 
-\item{n_slots}{tbc}
+\item{n_slots}{Float vector - number of visit slots available per day}
 
 \item{end_sr}{Integer vector - end service rate (end_sr) or final visit rate
 (FVR) - used in estimation of final number of visits required for
 each patient, e.g. c(1, 1)}
 
-\item{sd_esr}{tbc}
+\item{sd_esr}{Float vector - each float is standard deviation for end
+service rate distribution, e.g. c(0.5, 0.5)}
 }
 \value{
 List with updated id, npat, req_visits, patients, resources objects

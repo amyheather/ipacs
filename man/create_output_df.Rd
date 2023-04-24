@@ -7,10 +7,10 @@
 create_output_df(nrow)
 }
 \arguments{
-\item{nrow}{integer - number of rows}
+\item{nrow}{Integer - number of rows}
 }
 \value{
-dataframe
+Dataframe
 }
 \description{
 Create blank dataframe for output for visit-based simulation after warm-up

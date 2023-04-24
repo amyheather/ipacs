@@ -78,52 +78,57 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>in_system</dt>
-<dd><p>boolean (TRUE or FALSE) - is the patient already in the
+<dd><p>Boolean (TRUE or FALSE) - is the patient already in the
 system? If so, will produce adjusted length of stay and visit rates.</p></dd>
 
 
 <dt>id</dt>
-<dd><p>integer - ID number</p></dd>
+<dd><p>Integer - ID number</p></dd>
 
 
 <dt>npat</dt>
-<dd><p>integer - number of patients</p></dd>
+<dd><p>Integer - number of patients</p></dd>
 
 
 <dt>req_visits</dt>
-<dd><p>list - to store require visit vectors for each patient</p></dd>
+<dd><p>List to store require visit vectors for each patient</p></dd>
 
 
 <dt>patients</dt>
-<dd><p>dataframe - to store information about each patient (from create_patient_df())</p></dd>
+<dd><p>Dataframe to store information about each patient (from create_patient_df())</p></dd>
 
 
 <dt>resources</dt>
-<dd><p>dataframe - to capture information on available resources</p></dd>
+<dd><p>Dataframe to capture information on available resources</p></dd>
 
 
 <dt>t</dt>
-<dd><p>tbc</p></dd>
+<dd><p>Integer - day of simulation, e.g. 1</p></dd>
 
 
 <dt>z</dt>
-<dd><p>tbc</p></dd>
+<dd><p>Integer - refers to the current scenario and location as the
+simulation loops through pathway_vector_visit, e.g. 4</p></dd>
 
 
 <dt>srv_dist_visit</dt>
-<dd><p>tbc</p></dd>
+<dd><p>List with distribution for length of stay, e.g.
+list("lnorm", "lnorm")</p></dd>
 
 
 <dt>srv_params_visit</dt>
-<dd><p>tbc</p></dd>
+<dd><p>List containing mean and SD for the lnorm length of
+stay distribution, e.g. list(c(1.52, 1.32), c(1.60, 1.33))</p></dd>
 
 
 <dt>mean_los_visit</dt>
-<dd><p>tbc</p></dd>
+<dd><p>List of floats - each float is the mean of the normal
+length of stay distribution, e.g. list(12.08, 10)</p></dd>
 
 
 <dt>sd_los_visit</dt>
-<dd><p>tbc</p></dd>
+<dd><p>List with the standard deviation of the normal
+length of stay distribution, e.g. list(3, 3)</p></dd>
 
 
 <dt>isr</dt>
@@ -133,11 +138,12 @@ each patient, e.g. c(4, 4)</p></dd>
 
 
 <dt>sd_isr</dt>
-<dd><p>tbc</p></dd>
+<dd><p>Float vector - each float is standard deviation for initial
+service rate distribution, e.g. c(0.5, 0.5)</p></dd>
 
 
 <dt>n_slots</dt>
-<dd><p>tbc</p></dd>
+<dd><p>Float vector - number of visit slots available per day</p></dd>
 
 
 <dt>end_sr</dt>
@@ -147,7 +153,8 @@ each patient, e.g. c(1, 1)</p></dd>
 
 
 <dt>sd_esr</dt>
-<dd><p>tbc</p></dd>
+<dd><p>Float vector - each float is standard deviation for end
+service rate distribution, e.g. c(0.5, 0.5)</p></dd>
 
 </dl></div>
     <div class="section level2">

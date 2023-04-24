@@ -7,28 +7,35 @@
 #' dataframe, and then check availability in service and modify resources
 #' accordingly.
 #'
-#' @param in_system boolean (TRUE or FALSE) - is the patient already in the
+#' @param in_system Boolean (TRUE or FALSE) - is the patient already in the
 #' system? If so, will produce adjusted length of stay and visit rates.
-#' @param id integer - ID number
-#' @param npat integer - number of patients
-#' @param req_visits list - to store require visit vectors for each patient
-#' @param patients dataframe - to store information about each patient (from create_patient_df())
-#' @param resources dataframe - to capture information on available resources
-#' @param t tbc
-#' @param z tbc
-#' @param srv_dist_visit tbc
-#' @param srv_params_visit tbc
-#' @param mean_los_visit tbc
-#' @param sd_los_visit tbc
+#' @param id Integer - ID number
+#' @param npat Integer - number of patients
+#' @param req_visits List to store require visit vectors for each patient
+#' @param patients Dataframe to store information about each patient (from create_patient_df())
+#' @param resources Dataframe to capture information on available resources
+#' @param t Integer - day of simulation, e.g. 1
+#' @param z Integer - refers to the current scenario and location as the
+#'  simulation loops through pathway_vector_visit, e.g. 4
+#' @param srv_dist_visit List with distribution for length of stay, e.g.
+#'  list("lnorm", "lnorm")
+#' @param srv_params_visit List containing mean and SD for the lnorm length of
+#'  stay distribution, e.g. list(c(1.52, 1.32), c(1.60, 1.33))
+#' @param mean_los_visit List of floats - each float is the mean of the normal
+#'  length of stay distribution, e.g. list(12.08, 10)
+#' @param sd_los_visit List with the standard deviation of the normal
+#'  length of stay distribution, e.g. list(3, 3)
 #' @param isr Integer vector - initial service rate (ISR) or initial visit
 #'  rate (IVR) - used in estimation of initial number of visits required for
 #'  each patient, e.g. c(4, 4)
-#' @param sd_isr tbc
-#' @param n_slots tbc
+#' @param sd_isr Float vector - each float is standard deviation for initial
+#'  service rate distribution, e.g. c(0.5, 0.5)
+#' @param n_slots Float vector - number of visit slots available per day
 #' @param end_sr Integer vector - end service rate (end_sr) or final visit rate
 #'  (FVR) - used in estimation of final number of visits required for
 #'  each patient, e.g. c(1, 1)
-#' @param sd_esr tbc
+#' @param sd_esr Float vector - each float is standard deviation for end
+#'  service rate distribution, e.g. c(0.5, 0.5)
 #'
 #' @importFrom utils tail
 #'

@@ -5,18 +5,19 @@
 #' Pivots subset of arr_scenarios.
 #' Creates vector with each scenario name.
 #'
-#' @param model_type string - either "visit" or "bed"
-#' @param scenarios dataframe
-#' @param arr_scenarios dataframe
-#' @param costs dataframe
-#' @param sd_los dataframe
+#' @param model_type String - either "visit" or "bed"
+#' @param scenarios Dataframe with information about scenarios
+#' @param arr_scenarios Dataframe with information about arrival scenarios
+#' @param costs Dataframe with costs for community and acute for each location
+#'  and pathway
+#' @param sd_los Float - standard deviation of length of stay distribution
 #'
 #' @importFrom magrittr %>%
 #' @importFrom dplyr filter select arrange
 #' @importFrom stringr str_detect
 #' @importFrom tidyr separate
 #'
-#' @return list(return_new_names, return_objects)
+#' @return List of object names and objects
 #' @export
 sim_setup <- function(model_type,
                       scenarios = parent.frame()$scenarios,

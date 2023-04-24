@@ -7,10 +7,10 @@
 create_patient_df(nrow)
 }
 \arguments{
-\item{nrow}{integer - number of rows}
+\item{nrow}{Integer - number of rows}
 }
 \value{
-dataframe
+Dataframe
 }
 \description{
 Create blank dataframe to populate for patients in visit-based simulation

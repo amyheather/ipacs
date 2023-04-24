@@ -6,7 +6,7 @@
 #' (produced by dis_los()). Rounds to nearest integer. Assumption: All patients
 #' stay at least 1 day.
 #'
-#' @param long_los float - length of stay (output by dis_los())
+#' @param long_los Float - length of stay (output by dis_los())
 #'
 #' @importFrom stats runif
 #'

@@ -12,7 +12,7 @@ save_visit_stoch(
 \arguments{
 \item{visit_stoch_filename}{String - path to save output csv to}
 
-\item{visits_based_output}{Dataframe with stochastic results from
+\item{visits_based_output_q}{Dataframe with stochastic results from
 visit-based simulation}
 }
 \value{

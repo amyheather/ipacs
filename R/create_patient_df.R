@@ -2,9 +2,9 @@
 #'
 #' Create blank dataframe to populate for patients in visit-based simulation
 #'
-#' @param nrow integer - number of rows
+#' @param nrow Integer - number of rows
 #'
-#' @return dataframe
+#' @return Dataframe
 #' @export
 #'
 #' @examples

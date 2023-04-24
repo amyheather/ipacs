@@ -53,10 +53,6 @@ warmup <- 0
 Use [`import_file`](https://amyheather.github.io/ipacs/reference/import_file.html) to import sheets from file containing model parameters. This will produce 5 dataframes: "arrivals_all", "init_conds", "capacity", "losA" and "costs". As R cannot return multiple objects, we return a list of dataframes and a list of dataframe names, then use assign to create those in our current environment.
 ```{r import}
 files <- import_file(input_filename)
-
-print("List of objects created...")
-print(files[[1]])
-
 for (x in seq_along(files[[1]])){
   assign(files[[1]][x], files[[2]][[x]])
 }
@@ -77,19 +73,13 @@ arr_scenarios <- create_scenarios(scenarios=FALSE)
 **Set-up:** Use [`sim_setup`](https://amyheather.github.io/ipacs/reference/sim_setup.html) to create objects for visit-based simulation. These are returned in a list, so use assign to extract and add to environment.
 ``` {r setup_visit}
 setup_visit <- sim_setup("visit")
-
-print("List of objects created...")
-print(setup_visit[[1]])
-
 for (i in seq_along(setup_visit[[1]])){
   assign(setup_visit[[1]][i], setup_visit[[2]][[i]])
 }
-print("List of locations and scenarios...")
-print(pathway_vector_visit)
 ```
 
 **Run simulation:** Use [`run_visit_sim`](https://amyheather.github.io/ipacs/reference/run_visit_sim.html) to run the visit-based simulation. Extract the results (as returned as list).
-``` {r run_visit}
+``` {r run_visit, message = FALSE}
 visit_sim_result <- run_visit_sim()
 visits_based_output <- visit_sim_result[[1]]
 visits_based_output_q <- visit_sim_result[[2]]

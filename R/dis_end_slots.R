@@ -10,13 +10,14 @@
 #' samples to get ESR/FVR. It cannot be (a) less than 0, or (b) more than
 #' mean+SD*3.
 #'
-#' @param z string - scenario
-#' @param end_sr float - mean for ESR distribution
-#' @param sd_esr float - standard deviation for ESR distribution
+#' @param z String - scenario
+#' @param end_sr Float - mean for ESR distribution - default from end_sr vector
+#' @param sd_esr float - standard deviation for ESR distribution - default from
+#'  sd_esr vector
 #'
 #' @importFrom stats rnorm
 #'
-#' @return x integer - ESR
+#' @return x Integer - end service rate
 #' @export
 #'
 #' @examples

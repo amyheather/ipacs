@@ -10,14 +10,16 @@
 #' samples to get ISR/IVR. It cannot be (a) less than 0, (b) more than
 #' mean+SD*3, or (c) more than n_slots
 #'
-#' @param z string - scenario
-#' @param isr float - mean for ISR distribution
-#' @param sd_isr float - standard deviation for ISR distribution
-#' @param n_slots float - number of visit slots available per day
+#' @param z String - scenario
+#' @param isr Float - mean for ISR distribution - default is from isr vector
+#' @param sd_isr Float - standard deviation for ISR distribution - default is
+#'  from sd_isr vector
+#' @param n_slots Float - number of visit slots available per day - default is
+#'  from n_slots vector
 #'
 #' @importFrom stats rnorm
 #'
-#' @return x integer - ISR
+#' @return Integer - initial service rate
 #' @export
 #'
 #' @examples

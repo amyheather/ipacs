@@ -11,21 +11,22 @@ calculate_mu_sigma(
 )
 }
 \arguments{
-\item{est_method}{Integer. Indicates estimation method to use, either 1 or 2.}
+\item{est_method}{Integer - indicates estimation method to use, either 1 or 2}
 
-\item{losA}{Dataframe.}
+\item{losA}{Dataframe - imported from excel, contains length of stay
+parameters}
 
-\item{sd_los}{Float. Standard deviation for length of stay distribution.}
+\item{sd_los}{Float - standard deviation for length of stay distribution}
 }
 \value{
-losA with new mu, sigma and los_params columns.
+losA dataframe with new mu, sigma and los_params columns.
 }
 \description{
 Calculates mu and sigma, and stores both within los_params, within the
 length of stay dataframe (losA).
 }
 \examples{
-\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontrun{
 losA <- calculate_mu_sigma(est_method = 1, losA = losA, sd_los = 3)
-\dontshow{\}) # examplesIf}
+}
 }

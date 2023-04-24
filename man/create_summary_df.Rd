@@ -7,10 +7,10 @@
 create_summary_df(nrow)
 }
 \arguments{
-\item{nrow}{integer - number of rows}
+\item{nrow}{Integer - number of rows}
 }
 \value{
-dataframe
+Dataframe
 }
 \description{
 Create blank summary dataframe for visit-based simulation

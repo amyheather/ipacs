@@ -2,7 +2,7 @@
 #'
 #' Create blank dataframe to store wait times for visit-based simulation
 #'
-#' @return dataframe
+#' @return Dataframe
 #' @export
 #'
 #' @examples

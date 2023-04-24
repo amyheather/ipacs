@@ -13,18 +13,19 @@ sim_setup(
 )
 }
 \arguments{
-\item{model_type}{string - either "visit" or "bed"}
+\item{model_type}{String - either "visit" or "bed"}
 
-\item{scenarios}{dataframe}
+\item{scenarios}{Dataframe with information about scenarios}
 
-\item{arr_scenarios}{dataframe}
+\item{arr_scenarios}{Dataframe with information about arrival scenarios}
 
-\item{costs}{dataframe}
+\item{costs}{Dataframe with costs for community and acute for each location
+and pathway}
 
-\item{sd_los}{dataframe}
+\item{sd_los}{Float - standard deviation of length of stay distribution}
 }
 \value{
-list(return_new_names, return_objects)
+List of object names and objects
 }
 \description{
 Filters scenarios, arr_scenarios and costs to visit or bed pathways.

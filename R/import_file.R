@@ -5,7 +5,7 @@
 #' "capacity", "los" and "costs". Returns these as dataframes, along with
 #' list of dataframe names.
 #'
-#' @param filename String.
+#' @param filename String - path to excel file
 #'
 #' @importFrom readxl read_excel
 #'
@@ -14,8 +14,10 @@
 #'
 #' @export
 #'
-#' @examplesIf interactive()
+#' @examples
+#' \dontrun{
 #' import_file("ipacs_model_parameters.xlsx")
+#' }
 import_file <- function(filename){
   sheets <- c("arrivals", "initial conditions", "capacity", "los", "costs")
   df_names <- c("arrivals_all", "init_conds", "capacity", "losA", "costs")

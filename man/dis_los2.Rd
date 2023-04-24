@@ -7,7 +7,7 @@
 dis_los2(long_los)
 }
 \arguments{
-\item{long_los}{float - length of stay (output by dis_los())}
+\item{long_los}{Float - length of stay (output by dis_los())}
 }
 \value{
 Integer - shortened length of stay

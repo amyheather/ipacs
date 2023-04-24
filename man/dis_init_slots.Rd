@@ -12,16 +12,18 @@ dis_init_slots(
 )
 }
 \arguments{
-\item{z}{string - scenario}
+\item{z}{String - scenario}
 
-\item{isr}{float - mean for ISR distribution}
+\item{isr}{Float - mean for ISR distribution - default is from isr vector}
 
-\item{sd_isr}{float - standard deviation for ISR distribution}
+\item{sd_isr}{Float - standard deviation for ISR distribution - default is
+from sd_isr vector}
 
-\item{n_slots}{float - number of visit slots available per day}
+\item{n_slots}{Float - number of visit slots available per day - default is
+from n_slots vector}
 }
 \value{
-x integer - ISR
+Integer - initial service rate
 }
 \description{
 Sample from normal distribution to find the number of visits required when
