@@ -4,6 +4,7 @@
 # IPACS
 
 <!-- badges: start -->
+[![DOI](https://sandbox.zenodo.org/badge/623059386.svg)](https://sandbox.zenodo.org/badge/latestdoi/623059386)
 <!-- badges: end -->
 
 This repository contains models from the project “Improving Patient flow
